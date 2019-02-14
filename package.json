@@ -1,0 +1,29 @@
+{
+  "name": "legalassistant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/armandogautreaux/LegalAssistant.git"
+  },
+  "author": "Armando Gautreaux",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/armandogautreaux/LegalAssistant/issues"
+  },
+  "homepage": "https://github.com/armandogautreaux/LegalAssistant#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.4.12"
+  }
+}
