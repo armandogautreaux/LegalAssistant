@@ -1,7 +1,7 @@
 //DEPENDENCIES
 const express = require('express');
 const mongoose = require('mongoose');
-const UserRoutes = require('./routes/users.js');
+const routes = require('./routes');
 const app = express();
 
 //PORT
@@ -11,19 +11,21 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//STATIC FOLDER
-app.use(express.static('client/public'));
+//Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('cliend/build'));
+}
 
 //CIRCULAR DEPENDENCY TO USE ROUTES
-app.use(UserRoutes);
+app.use(routes);
 
 // MONGOOSE CONNECTION
-mongoose
-  .connect(process.env.MONGO_URI || 'mongodb://localhost/legalassistant', {
-    useNewUrlParser: true
-  })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+mongoose.connect(
+  process.env.MONGO_URI || 'mongodb://localhost/legalassistant',
+  { useNewUrlParser: true }
+);
 
 //INITIALIZE APP
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
