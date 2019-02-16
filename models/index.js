@@ -1,3 +1,4 @@
 module.exports = {
-  File: require('./File')
+  File: require('./File'),
+  User: require('./User')
 };

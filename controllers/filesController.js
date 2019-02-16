@@ -41,6 +41,9 @@ module.exports = {
   remove: function(req, res) {
     db.File.findById({ _id: req.params.id })
       .then(function(dbModel) {
+        dbModel.remove();
+      })
+      .then(function(dbModel) {
         res.json(dbModel);
       })
       .catch(function(err) {
