@@ -1,53 +1,59 @@
-const db = require('../models');
+const User = require('../models/User');
+const validateRegisterInput = require('../validation/register');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 module.exports = {
-  findAll: function(req, res) {
-    db.User.find(req.query)
-      .sort({ date: -1 })
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
+  create: (req, res) => {
+    const { errors, isValid } = validateRegisterInput(req.body);
+    // console.log(req.body);
+    // Check validation
+    if (!isValid) {
+      console.log(errors);
+      return res.status(400).json(errors);
+    }
+    // console.log(req.body);
+    const { name, email, password } = req.body;
+    console.log(req.body);
+
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.email = 'Email already exists';
+        return res.status(400).json(errors);
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) {
+              throw err;
+            }
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => res.json(user))
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
   },
-  findById: function(req, res) {
-    db.User.findById(req.params.id)
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
+  authenticate: function(req, res, next) {
+    passport.authenticate('local', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/users/login',
+      failureFlash: true
+    })(req, res, next);
   },
-  create: function(req, res) {
-    db.User.create(req.body)
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
-  },
-  update: function(req, res) {
-    db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
-  },
-  remove: function(req, res) {
-    db.User.findById({ _id: req.params.id })
-      .then(function(dbModel) {
-        dbModel.remove();
-      })
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
+  // authenticated: function(req, res) {
+  //   res.json({ user: req.user });
+  // },
+  endSession: function(req, res) {
+    req.logout();
+    res.redirect('/users/login');
   }
 };

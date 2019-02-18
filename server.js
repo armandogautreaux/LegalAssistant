@@ -3,6 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const app = express();
+const passport = require('passport');
+const session = require('express-session');
+
+// Passport Config
+require('./config/passport')(passport);
 
 //PORT
 const PORT = process.env.PORT || 8080;
@@ -15,6 +20,19 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('cliend/build'));
 }
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //CIRCULAR DEPENDENCY TO USE ROUTES
 app.use(routes);
