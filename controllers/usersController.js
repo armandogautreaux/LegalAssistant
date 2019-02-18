@@ -1,20 +1,19 @@
 const User = require('../models/User');
 const validateRegisterInput = require('../validation/register');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
+// const passport = require('passport');
 
 module.exports = {
   create: (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body);
-    // console.log(req.body);
+    const { errors, isValid } = validateRegisterInput(req.body.formValues);
+
     // Check validation
     if (!isValid) {
       console.log(errors);
       return res.status(400).json(errors);
     }
-    // console.log(req.body);
-    const { name, email, password } = req.body;
-    console.log(req.body);
+
+    const { name, email, password } = req.body.formValues;
 
     User.findOne({ email: email }).then(user => {
       if (user) {
@@ -42,13 +41,13 @@ module.exports = {
       }
     });
   },
-  authenticate: function(req, res, next) {
-    passport.authenticate('local', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/users/login',
-      failureFlash: true
-    })(req, res, next);
-  },
+  // authenticate: function( req , res, next) {
+  //   passport.authenticate('local', {
+  //     successRedirect: '/dashboard',
+  //     failureRedirect: '/users/login'
+  //     // failureFlash: true
+  //   })( req , res, next);
+  // },
   // authenticated: function(req, res) {
   //   res.json({ user: req.user });
   // },

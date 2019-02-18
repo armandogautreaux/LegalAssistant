@@ -2,10 +2,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
+const cors = require('cors');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
 
+app.use(cors());
 // Passport Config
 require('./config/passport')(passport);
 
@@ -25,8 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 app.use(
   session({
     secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
   })
 );
 
