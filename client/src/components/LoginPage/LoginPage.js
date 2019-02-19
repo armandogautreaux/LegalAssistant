@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../actions';
-import SingleForm from './SingleForm';
+import SingleForm from '../forms/SingleForm';
 
-class SignIn extends React.Component {
+class LoginPage extends React.Component {
   onSubmit = formValues => {
-    // console.log(formValues);
     this.props.signIn(formValues);
   };
   render() {
@@ -17,8 +16,14 @@ class SignIn extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  console.log(state.auth);
+  return {
+    state: state.auth
+  };
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   { signIn }
-)(SignIn);
+)(LoginPage);

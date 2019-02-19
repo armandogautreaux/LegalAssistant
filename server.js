@@ -9,7 +9,7 @@ const session = require('express-session');
 
 app.use(cors());
 // Passport Config
-require('./config/passport')(passport);
+// require('./passport')(passport);
 
 //PORT
 const PORT = process.env.PORT || 8080;

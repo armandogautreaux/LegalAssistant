@@ -1,0 +1,33 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { register } from '../../actions';
+import UserForm from '../forms/UserForm';
+
+class RegisterPage extends React.Component {
+  onSubmit = formValues => {
+    this.props.register(formValues);
+  };
+  render() {
+    return (
+      <div>
+        <h3>Create a Username</h3>
+        <UserForm onSubmit={this.onSubmit} />
+        <Link to="/login"> Cancel</Link>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  const registering = state.registration;
+  console.log(registering);
+  return {
+    registering
+  };
+};
+export default connect(
+  mapStateToProps,
+  { register }
+)(RegisterPage);
