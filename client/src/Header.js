@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import UserAuth from './UserAuth';
 
 const Header = () => {
   return (
@@ -12,7 +11,6 @@ const Header = () => {
         <Link to="/" className="item">
           All files
         </Link>
-        {/* <UserAuth /> */}
       </div>
     </div>
   );

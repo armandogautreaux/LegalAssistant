@@ -3,7 +3,7 @@ import { SIGN_IN, SIGN_OUT } from '../actions/types';
 
 const INITIAL_STATE = {
   isSignedIn: null,
-  userName: null
+  userId: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -12,10 +12,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isSignedIn: true,
-        userName: action.payload.username
+        userId: action.payload._id
       };
     case SIGN_OUT:
-      return { ...state, isSignedIn: false, userName: null };
+      return { ...state, isSignedIn: false, userId: null };
     default:
       return state;
   }
