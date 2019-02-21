@@ -1,5 +1,14 @@
 import api from '../apis/gyg';
-import { USER_CREATE, SIGN_IN, SIGN_OUT, CREATE_FILE } from './types';
+import {
+  USER_CREATE,
+  SIGN_IN,
+  SIGN_OUT,
+  CREATE_FILE,
+  FETCH_FILES
+  // FETCH_FILE,
+  // EDIT_FILE,
+  // DELETE_FILE
+} from './types';
 import history from '../history';
 
 //Register Action
@@ -33,8 +42,16 @@ export const signOut = () => {
 export const createFile = formValues => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
-    const response = await api.post('/api/files/', { ...formValues, userId });
+    const response = await api.post('/files/', { ...formValues, userId });
     dispatch({ type: CREATE_FILE, payload: response.data });
     history.push('/dashboard');
+  };
+};
+
+//Fetch files
+export const fetchFiles = () => {
+  return async dispatch => {
+    const response = await api.get('/files/');
+    dispatch({ type: FETCH_FILES, payload: response.data });
   };
 };
