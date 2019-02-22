@@ -9,9 +9,13 @@ class LoginPage extends React.Component {
   };
   render() {
     return (
-      <div>
-        <h3>SignIn</h3>
-        <SingleForm onSubmit={this.onSubmit} />
+      <div className="ui middle aligned center aligned grid">
+        <div className="column">
+          <h2 className="ui teal image header">
+            <div className="content">Log-in to your account</div>
+          </h2>
+          <SingleForm onSubmit={this.onSubmit} />
+        </div>
       </div>
     );
   }

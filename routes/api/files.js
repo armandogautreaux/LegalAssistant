@@ -9,7 +9,7 @@ router
 router
   .route('/:id')
   .get(filesController.findById)
-  .put(filesController.update)
+  .patch(filesController.update)
   .delete(filesController.remove);
 
 module.exports = router;

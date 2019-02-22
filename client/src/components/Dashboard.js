@@ -8,12 +8,26 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.fetchFiles();
   }
+  renderAdmin(file) {
+    if (file.userId === this.props.currentUserId) {
+      return (
+        <div className="right floated content">
+          <Link to={`/files/edit/${file._id}`} className="ui button primary">
+            Edit
+          </Link>
+          <Link to={`/files/delete/${file._id}`} className="ui button negative">
+            Delete
+          </Link>
+        </div>
+      );
+    }
+  }
   renderList() {
     console.log(this.props.files);
     return this.props.files.map(file => {
-      console.log(file);
       return (
         <div className="item" key={file._id}>
+          {this.renderAdmin(file)}
           <i className="large middle aligned icon camera" />
           <div className="content">
             <Link to={`/files/${file._id}`}>{file.fileNumber}</Link>
@@ -48,7 +62,8 @@ class Dashboard extends React.Component {
 const mapStateToProps = state => {
   return {
     files: Object.values(state.files),
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
+    currentUserId: state.auth.userId
   };
 };
 

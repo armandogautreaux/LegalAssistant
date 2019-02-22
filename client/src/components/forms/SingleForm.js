@@ -26,7 +26,10 @@ class SingleForm extends React.Component {
   };
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <form
+        className="ui large form"
+        onSubmit={this.props.handleSubmit(this.onSubmit)}
+      >
         <Field
           name="email"
           component={this.renderInput}

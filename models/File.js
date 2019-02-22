@@ -6,7 +6,7 @@ const filesSchema = new Schema({
   fileNumber: { type: String, required: true },
   client: { type: String, required: true },
   defendant: { type: String, required: true },
-  nextHearing: { type: Date, required: true },
+  nextHearing: { type: String, required: true },
   caseStatus: { type: String, require: true },
   summary: { type: String, required: true }
 });

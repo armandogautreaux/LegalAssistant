@@ -4,10 +4,10 @@ import {
   SIGN_IN,
   SIGN_OUT,
   CREATE_FILE,
-  FETCH_FILES
-  // FETCH_FILE,
-  // EDIT_FILE,
-  // DELETE_FILE
+  FETCH_FILES,
+  FETCH_FILE,
+  EDIT_FILE,
+  DELETE_FILE
 } from './types';
 import history from '../history';
 
@@ -53,5 +53,28 @@ export const fetchFiles = () => {
   return async dispatch => {
     const response = await api.get('/files/');
     dispatch({ type: FETCH_FILES, payload: response.data });
+  };
+};
+
+export const fetchFile = id => {
+  return async dispatch => {
+    const response = await api.get(`/files/${id}`);
+    dispatch({ type: FETCH_FILE, payload: response.data });
+  };
+};
+
+export const editFile = (id, formValues) => {
+  return async dispatch => {
+    const response = await api.patch(`/files/${id}`, formValues);
+    dispatch({ type: EDIT_FILE, payload: response.data });
+    history.push('/dashboard');
+  };
+};
+
+export const deleteFile = id => {
+  return async dispatch => {
+    await api.delete(`/files/${id}`);
+    dispatch({ type: DELETE_FILE, payload: id });
+    history.push('/dashboard');
   };
 };
