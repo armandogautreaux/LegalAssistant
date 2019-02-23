@@ -11,13 +11,21 @@ class SingleForm extends React.Component {
       );
     }
   }
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, meta }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
       <div className={className}>
-        <label>{label}</label>
-        <input {...input} autoComplete="off" />
-        {this.renderError(meta)}
+        <div className="ui left icon input">
+          <i className={input.name === 'email' ? 'user icon' : 'lock icon'} />
+          <input
+            {...input}
+            placeholder={
+              input.name === 'email' ? 'Enter Email' : 'Enter Password'
+            }
+            autoComplete="off"
+          />
+          {this.renderError(meta)}
+        </div>
       </div>
     );
   };
@@ -30,18 +38,11 @@ class SingleForm extends React.Component {
         className="ui large form"
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
-        <Field
-          name="email"
-          component={this.renderInput}
-          label={'Enter email'}
-        />
-        <Field
-          name="password"
-          component={this.renderInput}
-          label={'Enter Password'}
-        />
-
-        <button className="ui button primary">Submit</button>
+        <div className="ui stacked segment">
+          <Field name="email" component={this.renderInput} />
+          <Field name="password" component={this.renderInput} />
+          <button className="ui fluid large teal submit button">Submit</button>
+        </div>
       </form>
     );
   }

@@ -1,6 +1,8 @@
+import './LoginPage.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../actions';
+import { Link } from 'react-router-dom';
 import SingleForm from '../forms/SingleForm';
 
 class LoginPage extends React.Component {
@@ -15,6 +17,9 @@ class LoginPage extends React.Component {
             <div className="content">Log-in to your account</div>
           </h2>
           <SingleForm onSubmit={this.onSubmit} />
+          <div class="ui message">
+            New to us? <Link to="/register">Sign Up</Link>
+          </div>
         </div>
       </div>
     );
