@@ -7,3 +7,4 @@ export const FETCH_FILES = 'FETCH_FILES';
 export const FETCH_FILE = 'FETCH_FILE';
 export const EDIT_FILE = 'EDIT_FILE';
 export const DELETE_FILE = 'DELETE_FILE';
+export const SEARCH_FILE = 'SEARCH_FILE';

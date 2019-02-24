@@ -17,7 +17,7 @@ class LoginPage extends React.Component {
             <div className="content">Log-in to your account</div>
           </h2>
           <SingleForm onSubmit={this.onSubmit} />
-          <div class="ui message">
+          <div className="ui message">
             New to us? <Link to="/register">Sign Up</Link>
           </div>
         </div>

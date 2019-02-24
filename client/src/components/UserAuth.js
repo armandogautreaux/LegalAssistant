@@ -12,7 +12,7 @@ class UserAuth extends React.Component {
     if (this.props.isSignedIn) {
       return (
         <div className="ui buttons">
-          <button class="ui button black" onClick={this.onSignOutClick}>
+          <button className="ui button black" onClick={this.onSignOutClick}>
             <i className="sign-in icon" />
             Salir
           </button>
@@ -26,7 +26,7 @@ class UserAuth extends React.Component {
             Ingresar
           </Link>
           <div className="or" />
-          <Link to="/register" class="ui button green">
+          <Link to="/register" className="ui button green">
             <i className="users icon" />
             Registrar
           </Link>

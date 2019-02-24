@@ -7,7 +7,8 @@ import {
   FETCH_FILES,
   FETCH_FILE,
   EDIT_FILE,
-  DELETE_FILE
+  DELETE_FILE,
+  SEARCH_FILE
 } from './types';
 import history from '../history';
 
@@ -76,5 +77,15 @@ export const deleteFile = id => {
     await api.delete(`/files/${id}`);
     dispatch({ type: DELETE_FILE, payload: id });
     history.push('/dashboard');
+  };
+};
+
+//searchFile
+export const searchFile = ({ client, fileNumber }) => {
+  return async dispatch => {
+    console.log(client, fileNumber);
+    const response = await api.get('/files/');
+    dispatch({ type: SEARCH_FILE, payload: response.data });
+    history.push('/');
   };
 };

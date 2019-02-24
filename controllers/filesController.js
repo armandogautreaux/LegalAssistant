@@ -20,6 +20,13 @@ module.exports = {
         res.status(422).json(err);
       });
   },
+  findByTwoQueries: function(req, res) {
+    console.log(req);
+    db.File.find({
+      client: req.query.client,
+      fileNumber: req.query.fileNumber
+    });
+  },
   create: function(req, res) {
     db.File.create(req.body)
       .then(function(dbModel) {

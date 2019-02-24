@@ -4,7 +4,8 @@ import {
   FETCH_FILES,
   FETCH_FILE,
   EDIT_FILE,
-  DELETE_FILE
+  DELETE_FILE,
+  SEARCH_FILE
   // DELETE_FILE
 } from '../actions/types';
 
@@ -17,6 +18,8 @@ export default (state = {}, action) => {
         ...state,
         ..._.mapKeys(action.payload, '_id')
       };
+    case SEARCH_FILE:
+      return { ...state, [action.payload._id]: action.payload };
     case FETCH_FILE:
       return {
         ...state,
