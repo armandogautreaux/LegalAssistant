@@ -4,6 +4,7 @@ const filesController = require('../../controllers/filesController');
 router
   .route('/')
   .get(filesController.findAll)
+  .get(filesController.findByTwoQueries)
   .post(filesController.create);
 
 router
