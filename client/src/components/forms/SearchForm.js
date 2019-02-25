@@ -24,7 +24,6 @@ class SearchForm extends React.Component {
     );
   };
   onSubmit = formValues => {
-    console.log(formValues);
     this.props.onSubmit(formValues);
   };
   render() {

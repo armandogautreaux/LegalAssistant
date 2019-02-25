@@ -8,10 +8,11 @@ import {
   FETCH_FILE,
   EDIT_FILE,
   DELETE_FILE,
-  SEARCH_FILE
+  SEARCH_FILE,
+  FETCH_SEARCH
 } from './types';
 import history from '../history';
-
+// import qs from 'query-string';
 //Register Action
 export const register = user => {
   return async function(dispatch) {
@@ -80,12 +81,43 @@ export const deleteFile = id => {
   };
 };
 
+// //fetchSearch
+// export const fetchSearch = Query => {
+//   return async dispatch => {
+
+//     // const response = await api.get(`/files/?${searchString}`);
+//     // dispatch({ type: SEARCH_FILE, payload: response.data });
+//     // console.log(response.data);
+//     history.push(`/results/${searchString}`);
+//   };
+// };
+
 //searchFile
-export const searchFile = ({ client, fileNumber }) => {
+export const fetchSearch = Query => {
   return async dispatch => {
-    console.log(client, fileNumber);
-    const response = await api.get('/files/');
-    dispatch({ type: SEARCH_FILE, payload: response.data });
-    history.push('/');
+    // const searchString = qs.stringify(formValues);
+    const response = await api.get(`/files/${Query}`);
+    dispatch({ type: FETCH_SEARCH, payload: response.data });
+    // console.log(response.data);
+    history.push(`/search/${Query}`);
+  };
+};
+
+// export const searchFile = formValues => {
+//   return dispatch => {
+//     const searchString = qs.stringify(formValues);
+//     const nueObject = { search: searchString };
+//     dispatch({
+//       type: SEARCH_FILE,
+//       payload: nueObject
+//     });
+
+//     history.push(`/results/?${searchString}`);
+//   };
+// };
+
+export const searchFile = () => {
+  return {
+    type: SEARCH_FILE
   };
 };

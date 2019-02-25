@@ -21,11 +21,16 @@ module.exports = {
       });
   },
   findByTwoQueries: function(req, res) {
-    console.log(req);
     db.File.find({
       client: req.query.client,
       fileNumber: req.query.fileNumber
-    });
+    })
+      .then(function(dbModel) {
+        res.json(dbModel);
+      })
+      .catch(function(err) {
+        res.status(422).json(err);
+      });
   },
   create: function(req, res) {
     db.File.create(req.body)
