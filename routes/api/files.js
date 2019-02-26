@@ -4,8 +4,9 @@ const filesController = require('../../controllers/filesController');
 router
   .route('/')
   .get(filesController.findAll)
-  .get(filesController.findByTwoQueries)
   .post(filesController.create);
+
+router.route('/search').get(filesController.findByTwoQueries);
 
 router
   .route('/:id')

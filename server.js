@@ -6,11 +6,9 @@ const cors = require('cors');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 app.use(cors());
-// Passport Config
-// require('./passport')(passport);
-
 //PORT
 const PORT = process.env.PORT || 8080;
 
@@ -23,12 +21,19 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('cliend/build'));
 }
 
+// MONGOOSE CONNECTION
+mongoose.connect(
+  process.env.MONGO_URI || 'mongodb://localhost/legalassistant',
+  { useNewUrlParser: true }
+);
+
 // Express session
 app.use(
   session({
     secret: 'secret',
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
 
@@ -38,12 +43,6 @@ app.use(passport.session());
 
 //CIRCULAR DEPENDENCY TO USE ROUTES
 app.use(routes);
-
-// MONGOOSE CONNECTION
-mongoose.connect(
-  process.env.MONGO_URI || 'mongodb://localhost/legalassistant',
-  { useNewUrlParser: true }
-);
 
 //INITIALIZE APP
 app.listen(PORT, function() {

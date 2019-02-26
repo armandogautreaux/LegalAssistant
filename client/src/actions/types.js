@@ -9,3 +9,4 @@ export const EDIT_FILE = 'EDIT_FILE';
 export const DELETE_FILE = 'DELETE_FILE';
 export const SEARCH_FILE = 'SEARCH_FILE';
 export const FETCH_SEARCH = 'FETCH_SEARCH';
+export const RESET_SEARCH = 'RESET_SEARCH';

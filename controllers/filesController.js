@@ -21,16 +21,32 @@ module.exports = {
       });
   },
   findByTwoQueries: function(req, res) {
-    db.File.find({
-      client: req.query.client,
-      fileNumber: req.query.fileNumber
-    })
-      .then(function(dbModel) {
-        res.json(dbModel);
-      })
-      .catch(function(err) {
-        res.status(422).json(err);
-      });
+    db.File.find(
+      {
+        client: req.query.client,
+        fileNumber: req.query.fileNumber
+      },
+      function(err, result) {
+        if (err) {
+          res.status(422).json(err);
+        } else if (!result.length) {
+          res.status(404).send('Not found');
+        } else {
+          res.json(result);
+        }
+      }
+    );
+    // .then(function(err, result) {
+    //   if (!result.length) {
+    //     res.status(404).send('Not found');
+    //   }
+    // })
+    // .then(function(dbModel) {
+    //   res.json(dbModel);
+    // })
+    // .catch(function(err) {
+    //   res.status(422).json(err);
+    // });
   },
   create: function(req, res) {
     db.File.create(req.body)

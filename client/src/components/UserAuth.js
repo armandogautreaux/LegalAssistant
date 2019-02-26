@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { signOut, signIn } from '../actions';
 
 class UserAuth extends React.Component {
+  // componentDidMount(){
+
+  // }
   onSignOutClick = () => {
     this.props.signOut();
   };

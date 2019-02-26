@@ -15,7 +15,7 @@ module.exports = {
     }
 
     const { name, email, password } = req.body.user;
-    console.log(req.body);
+    console.log(req.body.user);
 
     User.findOne({ email: email }).then(user => {
       if (user) {

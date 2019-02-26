@@ -22,7 +22,6 @@ class RegisterPage extends React.Component {
 
 const mapStateToProps = state => {
   const registering = state.registration;
-  console.log(registering);
   return {
     registering
   };

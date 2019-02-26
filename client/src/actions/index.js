@@ -9,7 +9,8 @@ import {
   EDIT_FILE,
   DELETE_FILE,
   SEARCH_FILE,
-  FETCH_SEARCH
+  FETCH_SEARCH,
+  RESET_SEARCH
 } from './types';
 import history from '../history';
 // import qs from 'query-string';
@@ -96,9 +97,13 @@ export const deleteFile = id => {
 export const fetchSearch = Query => {
   return async dispatch => {
     // const searchString = qs.stringify(formValues);
-    const response = await api.get(`/files/${Query}`);
-    dispatch({ type: FETCH_SEARCH, payload: response.data });
+    const response = await api.get(`/files/search${Query}`);
+    dispatch({
+      type: FETCH_SEARCH,
+      payload: response.data[0]
+    });
     // console.log(response.data);
+    // console.log(response.data[0]);
     history.push(`/search/${Query}`);
   };
 };
@@ -115,6 +120,12 @@ export const fetchSearch = Query => {
 //     history.push(`/results/?${searchString}`);
 //   };
 // };
+
+export const resetSearch = () => {
+  return {
+    type: RESET_SEARCH
+  };
+};
 
 export const searchFile = () => {
   return {

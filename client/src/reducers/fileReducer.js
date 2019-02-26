@@ -4,9 +4,7 @@ import {
   FETCH_FILES,
   FETCH_FILE,
   EDIT_FILE,
-  DELETE_FILE,
-  SEARCH_FILE,
-  FETCH_SEARCH
+  DELETE_FILE
   // DELETE_FILE
 } from '../actions/types';
 
@@ -21,12 +19,14 @@ export default (state = {}, action) => {
       };
     // case SEARCH_FILE:
     //   return { ...state, ...action.payload };
-    case SEARCH_FILE:
-      return { ...state };
-    case FETCH_SEARCH:
-      return { ...state, ...action.payload };
     // case SEARCH_FILE:
-    //   return { ...state, [action.payload._id]: action.payload };
+    //   return { ...state };
+    // case FETCH_SEARCH:
+    //   return { ...state, ...action.payload };
+    // // case SEARCH_FILE:
+    // //   return { ...state, [action.payload._id]: action.payload };
+    // case RESET_SEARCH:
+    //   return _.omit(state, action.payload);
     case FETCH_FILE:
       return {
         ...state,
