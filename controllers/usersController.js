@@ -1,19 +1,7 @@
 const User = require('../models/User');
-const validateRegisterInput = require('../validation/register');
-const bcrypt = require('bcryptjs');
-// const passport = require('passport');
 
-// const passport = require('../passport');
 module.exports = {
   create: (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body.user);
-
-    // Check validation
-    if (!isValid) {
-      console.log(errors);
-      return res.status(400).json(errors);
-    }
-
     const { name, email, password } = req.body.user;
     console.log(req.body.user);
 
@@ -42,45 +30,31 @@ module.exports = {
         });
       }
     });
-  }
-  // authenticate: (req, res, next) => {
-  //   next();
-  //   passport.authenticate('local', {
-  //     successRedirect: '/dashboard',
-  //     failureRedirect: '/users/login'
-  //   }),
-  //     (req, res, next) => {
-  //       var userInfo = {
-  //         username: req.body
-  //       };
-  //       res.send(userInfo);
-  //     };
-  // },
+  },
 
-  // authenticate: (function(req, res, next) {
-  //   console.log(req.body);
-  //   next();
-  // },
-  // passport.authenticate('local'),
-  // (req, res) => {
-  //   var userInfo = { email: req.body.formValues.email };
-  //   res.send(userInfo);
-  // }),
-  // authenticate: function(req, res, next) {
-  //   passport.authenticate('local', {
-  //     successRedirect: '/dashboard',
-  //     failureRedirect: '/users/login'
-  //   })(req, res, next);
-  //   let userInfo = {
-  //     email: req.body.formValues.email
-  //   };
-  //   res.send(userInfo);
-  // },
-  // authenticated: function(req, res) {
-  //   res.json({ user: req.user });
-  // },
-  // endSession: function(req, res) {
-  //   req.logout();
-  //   res.redirect('/users/login');
-  // }
+  authenticate: function(req, res, next) {
+    // call passport authentication passing the "local" strategy name and a callback function
+    passport.authenticate('local-login', (error, user, info) => {
+      // this will execute in any case, even if a passport strategy will find an error
+      // log everything to console
+      console.log(error);
+      console.log(user);
+      console.log(info);
+
+      if (error) {
+        res.status(401).send(error);
+      } else if (!user) {
+        res.status(401).send(info);
+      } else {
+        next();
+      }
+      res.status(401).send(info);
+    }),
+      (req, res) => {
+        var userInfo = {
+          _id: req.user._id
+        };
+        res.send(userInfo);
+      };
+  }
 };

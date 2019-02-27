@@ -15,9 +15,13 @@ import {
 import history from '../history';
 // import qs from 'query-string';
 //Register Action
-export const register = user => {
+export const register = ({ name, email, password }) => {
   return async function(dispatch) {
-    const response = await api.post('/users/register', { user });
+    const response = await api.post('/users/register', {
+      name,
+      email,
+      password
+    });
     dispatch({ type: USER_CREATE, payload: response.data });
     history.push('/login');
   };
@@ -28,6 +32,7 @@ export const signIn = ({ email, password }) => {
   return async dispatch => {
     const response = await api.post('/users/login', { email, password });
     dispatch({ type: SIGN_IN, payload: response.data });
+    console.log(response.data);
     history.push('/dashboard');
   };
 };

@@ -36,17 +36,6 @@ module.exports = {
         }
       }
     );
-    // .then(function(err, result) {
-    //   if (!result.length) {
-    //     res.status(404).send('Not found');
-    //   }
-    // })
-    // .then(function(dbModel) {
-    //   res.json(dbModel);
-    // })
-    // .catch(function(err) {
-    //   res.status(422).json(err);
-    // });
   },
   create: function(req, res) {
     db.File.create(req.body)

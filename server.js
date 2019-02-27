@@ -1,20 +1,26 @@
 //DEPENDENCIES
 const express = require('express');
 const mongoose = require('mongoose');
-const routes = require('./routes');
+
 const cors = require('cors');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const routes = require('./routes');
+const morgan = require('morgan');
+// const cookieParser = require('cookie-parser');
+// const MongoStore = require('connect-mongo')(session);
 
-app.use(cors());
 //PORT
 const PORT = process.env.PORT || 8080;
 
+//MIDLEWARE MORGAN
+app.use(morgan('dev'));
+// app.use(cookieParser());
 //MIDLEWARE - USING EXPRESS INSTEAD OF 'BODYPARSER'
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 //Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
@@ -32,15 +38,25 @@ app.use(
   session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    saveUninitialized: true
+
+    // store: new MongoStore({
+    //   mongooseConnection: mongoose.connection,
+    //   ttl: 2 * 24 * 60 * 60
+    // })
   })
 );
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
+// app.use(cookieParser());
+app.use(function(req, res, next) {
+  console.log(req.session);
+  console.log('//////////');
+  console.log(req.user);
+  next();
+});
 //CIRCULAR DEPENDENCY TO USE ROUTES
 app.use(routes);
 

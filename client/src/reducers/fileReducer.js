@@ -17,16 +17,6 @@ export default (state = {}, action) => {
         ...state,
         ..._.mapKeys(action.payload, '_id')
       };
-    // case SEARCH_FILE:
-    //   return { ...state, ...action.payload };
-    // case SEARCH_FILE:
-    //   return { ...state };
-    // case FETCH_SEARCH:
-    //   return { ...state, ...action.payload };
-    // // case SEARCH_FILE:
-    // //   return { ...state, [action.payload._id]: action.payload };
-    // case RESET_SEARCH:
-    //   return _.omit(state, action.payload);
     case FETCH_FILE:
       return {
         ...state,
