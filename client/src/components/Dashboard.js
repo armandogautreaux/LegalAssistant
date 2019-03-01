@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchFiles } from '../actions';
+import { fetchFiles, getUser } from '../actions';
 import UserAuth from './UserAuth';
 
 class Dashboard extends React.Component {
   componentDidMount() {
+    this.props.getUser();
     this.props.fetchFiles();
   }
   renderAdmin(file) {
@@ -69,5 +70,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchFiles }
+  { fetchFiles, getUser }
 )(Dashboard);

@@ -5,11 +5,17 @@ const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  console.log('*** serializeUser called, user: ');
+  console.log(user); // the whole raw user object!
+  console.log('---------');
+  done(null, { _id: user._id });
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  User.findById({ _id: id }, 'email', function(err, user) {
+    console.log('*** Deserialize user, user:');
+    console.log(user);
+    console.log('--------------');
     done(err, user);
   });
 });
@@ -58,6 +64,7 @@ passport.use(
     function(req, email, password, done) {
       process.nextTick(function() {
         User.findOne({ email: email }, function(err, user) {
+          // console.log(user);
           if (err) throw err;
           if (!user) {
             return done(null, false, { message: 'No user found' });
@@ -66,6 +73,8 @@ passport.use(
             return done(null, false, { message: 'Invalid password' });
           } else {
             req.user = user;
+            // console.log(req.user);
+            // console.log(user);
             return done(null, user);
           }
         });

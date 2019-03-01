@@ -10,7 +10,8 @@ import {
   DELETE_FILE,
   SEARCH_FILE,
   FETCH_SEARCH,
-  RESET_SEARCH
+  RESET_SEARCH,
+  GET_USER
 } from './types';
 import history from '../history';
 // import qs from 'query-string';
@@ -40,7 +41,7 @@ export const signIn = ({ email, password }) => {
 //SignOut Action
 export const signOut = () => {
   return async dispatch => {
-    await api.get('/users/logout');
+    await api.post('/users/logout');
     dispatch({ type: SIGN_OUT });
     history.push('/');
   };
@@ -83,6 +84,15 @@ export const deleteFile = id => {
   return async dispatch => {
     await api.delete(`/files/${id}`);
     dispatch({ type: DELETE_FILE, payload: id });
+    history.push('/dashboard');
+  };
+};
+
+export const getUser = () => {
+  return async dispatch => {
+    const response = await api.get('/users/');
+    dispatch({ type: GET_USER, payload: response.data });
+    console.log(response.data);
     history.push('/dashboard');
   };
 };
