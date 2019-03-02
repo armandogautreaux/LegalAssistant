@@ -15,6 +15,21 @@ router.post('/register', passport.authenticate('local-signup'), (req, res) => {
 //   res.send({ _id: req.user._id });
 // });
 
+// router.post(
+//   '/login',
+//   function(req, res, next) {
+//     console.log('routes/user.js, login, req.body: ');
+//     console.log(req.body);
+//     next();
+//   },
+//   passport.authenticate('local-login'),
+//   (req, res) => {
+//     console.log('logged in', req.user);
+
+//     res.send({ _id: req.user._id });
+//   }
+// );
+
 router.post(
   '/login',
   function(req, res, next) {
@@ -25,7 +40,10 @@ router.post(
   passport.authenticate('local-login'),
   (req, res) => {
     console.log('logged in', req.user);
-    res.send({ _id: req.user._id });
+    var userInfo = {
+      _id: req.user._id
+    };
+    res.send(userInfo);
   }
 );
 
@@ -39,21 +57,27 @@ router.post(
 //   // }
 // });
 
-router.get('/', loggedIn, function(req, res, next) {
-  // req.user - will exist
-  // load user orders and render them
+router.get('/', (req, res, next) => {
   console.log('===== user!!======');
   console.log(req.user);
-  res.send({ user: req.user });
+  // console.log(req.session.passport);
+
+  // req.headers.cookie = req.user;
+  if (req.user) {
+    console.log(req.user);
+    res.json({ user: req.user });
+  } else {
+    res.json({ user: null });
+  }
 });
 
-function loggedIn(req, res, next) {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send('No cookie received');
-  }
-}
+// function loggedIn(req, res, next) {
+//   if (req.user) {
+//     next();
+//   } else {
+//     res.status(401).send('No cookie received');
+//   }
+// }
 
 router.post('/logout', (req, res) => {
   if (req.user) {

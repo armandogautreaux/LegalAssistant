@@ -89,11 +89,22 @@ export const deleteFile = id => {
 };
 
 export const getUser = () => {
+  const config = {
+    withCredentials: true,
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+
   return async dispatch => {
-    const response = await api.get('/users/');
+    const response = await api.get('/users/', config);
+    console.log(response.data);
     dispatch({ type: GET_USER, payload: response.data });
     console.log(response.data);
-    history.push('/dashboard');
+    // history.push('/dashboard');
   };
 };
 

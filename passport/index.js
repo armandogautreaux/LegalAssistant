@@ -4,19 +4,21 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   console.log('*** serializeUser called, user: ');
   console.log(user); // the whole raw user object!
   console.log('---------');
   done(null, { _id: user._id });
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById({ _id: id }, 'email', function(err, user) {
+// user object attaches to the request as req.user
+passport.deserializeUser((id, done) => {
+  console.log('DeserializeUser called');
+  User.findOne({ _id: id }, 'email', (err, user) => {
     console.log('*** Deserialize user, user:');
     console.log(user);
     console.log('--------------');
-    done(err, user);
+    done(null, user);
   });
 });
 
@@ -57,11 +59,11 @@ passport.use(
   'local-login',
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true
+      usernameField: 'email'
+      // passwordField: 'password',
+      // passReqToCallback: true
     },
-    function(req, email, password, done) {
+    function(email, password, done) {
       process.nextTick(function() {
         User.findOne({ email: email }, function(err, user) {
           // console.log(user);
@@ -71,12 +73,15 @@ passport.use(
           }
           if (!bcrypt.compareSync(password, user.password)) {
             return done(null, false, { message: 'Invalid password' });
-          } else {
-            req.user = user;
-            // console.log(req.user);
-            // console.log(user);
-            return done(null, user);
           }
+
+          // else {
+          //   req.user = user;
+          //   // console.log(req.user);
+          //   // console.log(user);
+          //   return done(null, user);
+          // }
+          return done(null, user);
         });
       });
     }

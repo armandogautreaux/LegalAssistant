@@ -1,32 +1,68 @@
 //DEPENDENCIES
 const express = require('express');
 const mongoose = require('mongoose');
-
-const cors = require('cors');
-const app = express();
-const passport = require('passport');
-const session = require('express-session');
-const routes = require('./routes');
 const morgan = require('morgan');
-// const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+// const passport = require('passport');
+const passport = require('./passport');
+const app = express();
+
+const routes = require('./routes');
+
+const cookieParser = require('cookie-parser');
+// const MongoStore = require('connect-mongo')(session);
 
 //PORT
 const PORT = process.env.PORT || 8080;
 
 //MIDLEWARE MORGAN
 app.use(morgan('dev'));
-// app.use(cookieParser());
+app.use(cookieParser());
 //MIDLEWARE - USING EXPRESS INSTEAD OF 'BODYPARSER'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(cors());
-app.use(
-  cors({
-    methods: ['GET', 'POST'],
-    credentials: true
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+
+//   }),
+// );
+app.use(cors());
+
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', req.headers.origin);
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   next();
+// });
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+  );
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+});
+// app.use(
+//   cors({
+//     origin: ['http://localhost:8080'],
+//     methods: ['GET', 'POST'],
+//     credentials: true
+//   })
+// );
 
 //Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
@@ -39,31 +75,35 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
+app.set('trust proxy', 1);
 // Express session
 app.use(
   session({
     secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      secure: true
-    },
+    // proxy: true,
+    // httpOnly: true,
+    // cookie: {
+    //   secure: false
+    // },
 
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
       ttl: 2 * 24 * 60 * 60
-    })
+    }),
+    resave: false,
+    saveUninitialized: true
   })
 );
 
 // Passport middleware
 app.use(passport.initialize());
+
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  res.locals.user = req.user || null;
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.locals.user = req.user || null;
+//   next();
+// });
 // app.use(cookieParser());
 
 //CIRCULAR DEPENDENCY TO USE ROUTES
