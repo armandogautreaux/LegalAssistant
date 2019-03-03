@@ -18,7 +18,7 @@ import history from '../history';
 //Register Action
 export const register = ({ name, email, password }) => {
   return async function(dispatch) {
-    const response = await api.post('/users/register', {
+    const response = await api.post('/users/', {
       name,
       email,
       password
@@ -41,7 +41,7 @@ export const signIn = ({ email, password }) => {
 //SignOut Action
 export const signOut = () => {
   return async dispatch => {
-    await api.post('/users/logout');
+    await api.get('/users/logout');
     dispatch({ type: SIGN_OUT });
     history.push('/');
   };
@@ -91,12 +91,17 @@ export const deleteFile = id => {
 export const getUser = () => {
   const config = {
     withCredentials: true,
-    mode: 'cors',
-    credentials: 'same-origin',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: 'same-origin'
+    // ,
+    // mode: 'cors',
+    // credentials: 'same-origin',
+    // headers: {
+    //   Accept: 'application/json',
+    //   'Content-Type': 'application/json'
+    // }
   };
 
   return async dispatch => {

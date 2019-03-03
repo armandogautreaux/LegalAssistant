@@ -26,6 +26,7 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "connect-mongo": "^2.0.3",
     "cookie-parser": "^1.4.4",
@@ -35,7 +36,9 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.4.12",
     "morgan": "^1.9.1",
+    "npm": "^6.8.0",
     "passport": "^0.4.0",
+    "passport-cookie": "^1.0.6",
     "passport-local": "^1.0.0",
     "validator": "^10.11.0"
   }

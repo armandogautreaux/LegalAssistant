@@ -30,34 +30,26 @@ module.exports = {
         });
       }
     });
-  }
+  },
 
-  // authenticate: function(req, res, next) {
-  //   passport.authenticate('local-login', function(err, user, info) {
-  //     if (err || !user) return res.status(401).send(error);
-  //     req.logIn(user, function(err) {
-  //       if (err) return err;
-  //       // console.log('req.login called!');
-  //       // console.log('INFO, ', info);
-  //       return res.status(201).json({
-  //         user: user,
-  //         session: req.session,
-  //         'req.user': req.user
-  //       });
-  //       // if (err) return res.status(401).send(error);
-  //       // return res.send({ _id: req.user._id });
-  //     });
-  //   })(req, res, next);
-  // }
+  authenticate: function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+      if (err || !user) return res.status(401).send(error);
+      req.logIn(user, function(err) {
+        if (err) return res.status(401).send(error);
+        return res.send({ _id: req.user._id });
+      });
+    })(req, res, next);
+  }
 };
 
-// req.login(user, function(err) {
-//   if (err) return err;
-//   console.log("req.login called!");
-//   console.log("INFO, ", info);
-//   return res.status(201).json({
-//       user: user,
-//       session: req.session,
-//       "req.user": req.user
-//   });
-// });
+req.login(user, function(err) {
+  if (err) return err;
+  console.log('req.login called!');
+  console.log('INFO, ', info);
+  return res.status(201).json({
+    user: user,
+    session: req.session,
+    'req.user': req.user
+  });
+});

@@ -11,7 +11,7 @@ const app = express();
 
 const routes = require('./routes');
 
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 // const MongoStore = require('connect-mongo')(session);
 
 //PORT
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 8080;
 
 //MIDLEWARE MORGAN
 app.use(morgan('dev'));
-app.use(cookieParser());
+// app.use(cookieParser());
 //MIDLEWARE - USING EXPRESS INSTEAD OF 'BODYPARSER'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -64,11 +64,6 @@ app.use(function(req, res, next) {
 //   })
 // );
 
-//Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('cliend/build'));
-}
-
 // MONGOOSE CONNECTION
 mongoose.connect(
   process.env.MONGO_URI || 'mongodb://localhost/legalassistant',
@@ -79,13 +74,8 @@ app.set('trust proxy', 1);
 // Express session
 app.use(
   session({
-    secret: 'secret',
-    // proxy: true,
-    // httpOnly: true,
-    // cookie: {
-    //   secure: false
-    // },
-
+    secret: 'thislandlandkdfasdsafaf',
+    cookie: { secure: false, httpOnly: true },
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
       ttl: 2 * 24 * 60 * 60
@@ -95,10 +85,14 @@ app.use(
   })
 );
 
-// Passport middleware
+// Passport
 app.use(passport.initialize());
+app.use(passport.session()); // calls the deserializeUser
 
-app.use(passport.session());
+//Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('cliend/build'));
+}
 
 // app.use(function(req, res, next) {
 //   res.locals.user = req.user || null;
