@@ -3,8 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const dotenv = require('dotenv');
+dotenv.config();
+
+const secret = process.env.SECRET_OR_KEY;
+// const session = require('express-session');
+// const MongoStore = require('connect-mongo')(session);
 // const cookieSession = require('cookie-session');
 // const passport = require('passport');
 const passport = require('./passport');
@@ -31,7 +35,7 @@ app.use(express.json());
 //   }),
 // );
 app.use(cors());
-
+app.use(cookieParser(secret));
 // app.use(function(req, res, next) {
 //   res.header('Access-Control-Allow-Origin', req.headers.origin);
 //   res.header(
@@ -77,24 +81,24 @@ mongoose.connect(
 //     keys: ['kjdsl;kjdflksjfkls']
 //   })
 // );
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 // Express session
-app.use(
-  session({
-    secret: 'thislandlandkdfasdsafaf',
-    cookie: { secure: false, httpOnly: true },
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 2 * 24 * 60 * 60
-    }),
-    resave: false,
-    saveUninitialized: true
-  })
-);
+// app.use(
+//   session({
+//     secret: 'thislandlandkdfasdsafaf',
+//     cookie: { secure: false, httpOnly: true },
+//     store: new MongoStore({
+//       mongooseConnection: mongoose.connection,
+//       ttl: 2 * 24 * 60 * 60
+//     }),
+//     resave: false,
+//     saveUninitialized: true
+//   })
+// );
 
 // Passport
 app.use(passport.initialize());
-app.use(passport.session()); // calls the deserializeUser
+// app.use(passport.session()); // calls the deserializeUser
 
 //Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {

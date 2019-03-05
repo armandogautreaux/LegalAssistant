@@ -1,55 +1,72 @@
 const User = require('../models/User');
 const passport = require('../passport');
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
-  create: (req, res) => {
-    const { name, email, password } = req.body.user;
-    console.log(req.body.user);
+  register: (req, res) => {
+    console.log('user signup');
 
-    User.findOne({ email: email }).then(user => {
-      if (user) {
-        errors.email = 'Email already exists';
-        return res.status(400).json(errors);
-      } else {
-        const newUser = new User({
-          name,
-          email,
-          password
+    const { email, password, name } = req.body;
+    // ADD VALIDATION
+    User.findOne({ email: email }, (err, user) => {
+      if (err) {
+        console.log('User.js post error: ', err);
+      } else if (user) {
+        res.json({
+          error: `Sorry, already a user with the username: ${email}`
         });
-
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) {
-              throw err;
-            }
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => res.json(user))
-              .catch(err => console.log(err));
-          });
+      } else {
+        const hash = bcrypt.hashSync(password, salt);
+        const newUser = new User({
+          name: name,
+          email: email,
+          password: hash
+        });
+        newUser.save((err, savedUser) => {
+          if (err) return res.json(err);
+          res.json(savedUser);
         });
       }
     });
   },
+  login: (req, res) => {
+    const secret = process.env.SECRET_OR_KEY;
 
-  authenticate: function(req, res, next) {
-    passport.authenticate('local-login', function(err, user, info) {
-      if (err || !user) return res.status(401).send(error);
-      req.logIn(user, function(err) {
-        if (err) return res.status(401).send(error);
-        return res.send({ _id: req.user._id });
+    passport.authenticate('local', { session: false }, (error, user) => {
+      if (error || !user) {
+        res.status(400).json({ error });
+      }
+      const payload = {
+        username: user._id,
+        expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS)
+      };
+      console.log(payload);
+
+      /** assigns payload to req.user */
+      req.login(payload, { session: false }, error => {
+        console.log(payload);
+        if (error) {
+          res.status(400).send({ error });
+        }
+        /** generate a signed json web token and return it in the response */
+        const token = jwt.sign(JSON.stringify(payload), secret);
+
+        /** assign our jwt to the cookie */
+        res.cookie('jwt', token, { httpOnly: true, secure: true });
+        res.status(200).send({ _id: payload.username });
       });
-    })(req, res, next);
+    })(req, res);
   }
-};
+  // authenticate: (req, res) => {
+  //   passport.authenticate('jwt', { session: false }, (error, user) => {
+  //     const validUser = req.user;
 
-req.login(user, function(err) {
-  if (err) return err;
-  console.log('req.login called!');
-  console.log('INFO, ', info);
-  return res.status(201).json({
-    user: user,
-    session: req.session,
-    'req.user': req.user
-  });
-});
+  //     res.status(200).send({ validUser });
+  //   }),
+  //     (req, res);
+  // }
+};

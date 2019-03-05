@@ -22,54 +22,50 @@ const bcrypt = require('bcryptjs');
 //   }
 // }));
 
-const strategy = new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  async (email, password, done) => {
-    try {
-      const user = await User.findOne({ email: email }).exec();
-      const passwordsMatch = await bcrypt.compareSync(password, user.password);
-
-      if (passwordsMatch) {
-        return done(null, user);
-      } else {
-        return done('Incorrect Username / Password');
-      }
-    } catch (error) {
-      done(error);
-    }
-  }
-);
-
 // const strategy = new LocalStrategy(
 //   {
 //     usernameField: 'email',
-//     passwordField: 'password',
-//     passReqToCallback: true
+//     passwordField: 'password'
 //   },
-//   function(req, email, password, done) {
-//     //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+//   async (email, password, done) => {
+//     try {
+//       const user = await User.findOne({ email: email }).exec();
+//       const passwordsMatch = await bcrypt.compareSync(password, user.password);
 
-//     User.findOne({ email: email }, function(err, user) {
-//       if (err) {
-//         return done(err);
+//       if (passwordsMatch) {
+//         return done(null, user);
+//       } else {
+//         return done('Incorrect Username / Password');
 //       }
-//       if (!user) {
-//         return done(null, false);
-//       }
-//       if (!bcrypt.compareSync(password, user.password)) {
-//         return done(null, false, { message: 'Invalid password' });
-//       }
-//       return req.logIn(user, function() {
-//         // Manually save session before redirect. See bug https://github.com/expressjs/session/pull/69
-//         req.session.save(function() {
-//           req.user = user;
-//           return done(null, user);
-//         });
-//       });
-//     });
+//     } catch (error) {
+//       done(error);
+//     }
+//   }
+// );
+
+const strategy = new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  function(req, email, password, done) {
+    //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+
+    User.findOne({ email: email }, function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false);
+      }
+      if (!bcrypt.compareSync(password, user.password)) {
+        return done(null, false, { message: 'Invalid password' });
+      }
+      return done(null, user);
+    });
+  }
+);
 
 // User.findOne({ email: email })
 //   .then(user => {

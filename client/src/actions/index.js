@@ -89,23 +89,16 @@ export const deleteFile = id => {
 };
 
 export const getUser = () => {
-  // const config = {
-  //   withCredentials: true,
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   credentials: 'same-origin'
-  //   // ,
-  //   // mode: 'cors',
-  //   // credentials: 'same-origin',
-  //   // headers: {
-  //   //   Accept: 'application/json',
-  //   //   'Content-Type': 'application/json'
-  //   // }
-  // };
+  const config = {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin'
+  };
 
   return async dispatch => {
-    const response = await api.get('/users/profile');
+    const response = await api.get('/users/profile', config);
     console.log(response.data);
     dispatch({ type: GET_USER, payload: response.data });
     console.log(response.data);
