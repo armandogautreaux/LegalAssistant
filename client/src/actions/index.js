@@ -18,7 +18,7 @@ import history from '../history';
 //Register Action
 export const register = ({ name, email, password }) => {
   return async function(dispatch) {
-    const response = await api.post('/users/', {
+    const response = await api.post('/users/register', {
       name,
       email,
       password
@@ -89,27 +89,27 @@ export const deleteFile = id => {
 };
 
 export const getUser = () => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'same-origin'
-    // ,
-    // mode: 'cors',
-    // credentials: 'same-origin',
-    // headers: {
-    //   Accept: 'application/json',
-    //   'Content-Type': 'application/json'
-    // }
-  };
+  // const config = {
+  //   withCredentials: true,
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   credentials: 'same-origin'
+  //   // ,
+  //   // mode: 'cors',
+  //   // credentials: 'same-origin',
+  //   // headers: {
+  //   //   Accept: 'application/json',
+  //   //   'Content-Type': 'application/json'
+  //   // }
+  // };
 
   return async dispatch => {
-    const response = await api.get('/users/', config);
+    const response = await api.get('/users/profile');
     console.log(response.data);
     dispatch({ type: GET_USER, payload: response.data });
     console.log(response.data);
-    // history.push('/dashboard');
+    history.push('/dashboard');
   };
 };
 

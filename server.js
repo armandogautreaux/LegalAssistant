@@ -5,13 +5,14 @@ const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+// const cookieSession = require('cookie-session');
 // const passport = require('passport');
 const passport = require('./passport');
 const app = express();
 
 const routes = require('./routes');
 
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 // const MongoStore = require('connect-mongo')(session);
 
 //PORT
@@ -19,7 +20,7 @@ const PORT = process.env.PORT || 8080;
 
 //MIDLEWARE MORGAN
 app.use(morgan('dev'));
-// app.use(cookieParser());
+app.use(cookieParser());
 //MIDLEWARE - USING EXPRESS INSTEAD OF 'BODYPARSER'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -70,6 +71,12 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
+// app.use(
+//   cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000,
+//     keys: ['kjdsl;kjdflksjfkls']
+//   })
+// );
 app.set('trust proxy', 1);
 // Express session
 app.use(

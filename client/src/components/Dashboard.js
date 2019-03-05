@@ -9,6 +9,9 @@ class Dashboard extends React.Component {
     this.props.getUser();
     this.props.fetchFiles();
   }
+  componentDidUpdate() {
+    // this.props.getUser();
+  }
   renderAdmin(file) {
     if (file.userId === this.props.currentUserId) {
       return (

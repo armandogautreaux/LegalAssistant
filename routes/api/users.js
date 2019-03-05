@@ -12,7 +12,7 @@ const salt = bcrypt.genSaltSync(10);
 //   res.status(200).send('Registered');
 // });
 
-router.post('/', (req, res) => {
+router.post('/register', (req, res) => {
   console.log('user signup');
 
   const { email, password, name } = req.body;
@@ -70,6 +70,15 @@ router.post('/', (req, res) => {
 //   }
 // );
 
+// router.post('/login', passport.authenticate('local'), function(req, res) {
+//   console.log('logged in', req.user);
+
+//   var userInfo = {
+//     _id: req.user._id
+//   };
+//   res.send(userInfo);
+// });
+
 router.post(
   '/login',
   function(req, res, next) {
@@ -97,17 +106,22 @@ router.post(
 //   // }
 // });
 
-router.get('/', (request, response, next) => {
-  console.log(request.user, request.session);
-  console.log(request.sessionID);
-  console.log(request.isAuthenticated());
-  if (request.user) {
-    response.header('Content-Type', 'application/json');
-    return response.send(request.user);
-  } else {
-    return response.status(401).send('There is no user currently logged in!');
-  }
+router.get('/profile', function(req, res) {
+  console.log(req.user);
+  res.send({ user: req.user });
 });
+
+// router.get('/', (request, response, next) => {
+//   console.log(request.user, request.session);
+//   console.log(request.sessionID);
+//   console.log(request.isAuthenticated());
+//   if (request.user) {
+//     response.header('Content-Type', 'application/json');
+//     return response.send(request.user);
+//   } else {
+//     return response.status(401).send('There is no user currently logged in!');
+//   }
+// });
 // router.get('/', (req, res, next) => {
 //   console.log('===== user!!======');
 //   console.log(req.user);

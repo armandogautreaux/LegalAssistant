@@ -1,28 +1,50 @@
 const passport = require('passport');
 // const LocalStrategy = require('passport-local').Strategy;
 const LocalStrategy = require('./localStrategy');
+const JWTStrategy = require('./jwtStrategy');
 const User = require('../models/User');
 // const bcrypt = require('bcryptjs');
 // const salt = bcrypt.genSaltSync(10);
 
-passport.serializeUser((user, done) => {
-  console.log('*** serializeUser called, user: ');
-  console.log(user); // the whole raw user object!
-  console.log('---------');
-  done(null, { _id: user._id });
+// passport.serializeUser((user, done) => {
+//   console.log('*** serializeUser called, user: ');
+//   console.log(user); // the whole raw user object!
+//   console.log('---------');
+//   done(null, { _id: user._id });
+// });
+
+// user object attaches to the request as req.user''
+
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
 });
 
-// user object attaches to the request as req.user
-
-passport.deserializeUser((id, done) => {
-  console.log('DeserializeUser called');
-  User.findOne({ _id: id }, 'email', (err, user) => {
-    console.log('*** Deserialize user, user:');
-    console.log(user);
-    console.log('--------------');
-    done(null, user);
+passport.deserializeUser((id, cb) => {
+  User.findById({ _id: id }).then(user => {
+    cb(null, user);
   });
 });
+// passport.deserializeUser(function(id, done) {
+//   User.findOne({ _id: id })
+//     .then(function(user) {
+//       console.log('*** Deserialize user, user:');
+//       console.log(user);
+//       console.log('--------------');
+//       done(null, user);
+//     })
+//     .catch(function(err) {
+//       done(err, null);
+//     });
+// });
+// passport.deserializeUser((id, done) => {
+//   console.log('DeserializeUser called');
+//   User.findOne({ _id: id }, 'email', (err, user) => {
+//     console.log('*** Deserialize user, user:');
+//     console.log(user);
+//     console.log('--------------');
+//     done(null, user);
+//   });
+// });
 
 // passport.use(
 //   'local-login',
@@ -57,6 +79,8 @@ passport.deserializeUser((id, done) => {
 //   )
 // );
 //  Use Strategies
+
 passport.use(LocalStrategy);
+passport.use(JWTStrategy);
 
 module.exports = passport;
