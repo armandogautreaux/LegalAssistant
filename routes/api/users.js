@@ -11,6 +11,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { user } = req;
+    console.log(req.header);
 
     res.status(200).send({ user });
   }
