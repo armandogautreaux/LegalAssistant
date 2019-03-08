@@ -30,8 +30,33 @@ export const register = ({ name, email, password }) => {
 
 //SignIn Action
 export const signIn = ({ email, password }) => {
+  // var settings = {
+  //   async: true,
+  //   crossDomain: true,
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     'Cache-Control': 'no-cache'
+  //   }
+  // };
+
+  // const config = {
+  //   withCredentials: true,
+  //   data: {
+  //     email: email,
+  //     password: password
+  //   },
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   credentials: 'same-origin'
+  // };
   return async dispatch => {
     const response = await api.post('/users/login', { email, password });
+    // const response = await api.post('/users/login', {
+    //   data: { email, password },
+    //   withCredentials: true
+    // });
     dispatch({ type: SIGN_IN, payload: response.data });
     console.log(response.data);
     history.push('/dashboard');

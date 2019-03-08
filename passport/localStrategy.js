@@ -50,6 +50,8 @@ const strategy = new LocalStrategy(
     passReqToCallback: true
   },
   function(req, email, password, done) {
+    console.log(req.body);
+    // const password = req.body.password;
     //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
 
     User.findOne({ email: email }, function(err, user) {

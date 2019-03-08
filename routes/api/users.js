@@ -1,17 +1,82 @@
 const router = require('express').Router();
 const passport = require('../../passport');
 const usersController = require('../../controllers/usersController');
+// const jwt = require('jsonwebtoken');
+// const dotenv = require('dotenv');
+// dotenv.config();
+
+// const secret = process.env.SECRET_OR_KEY;
 
 router.route('/register').post(usersController.register);
 router.route('/login').post(usersController.login);
 // router.route('/profile').get(usersController.authenticate);
 
+// router.post(
+//   '/login',
+//   function(req, res, next) {
+//     // Populate username and password before passing it on to Passport.
+//     req.query.email = req.body.data.email;
+//     req.query.password = req.body.data.password;
+//     next();
+//   },
+//   function(req, res, next) {
+//     passport.authenticate('local', { session: false }, function(
+//       error,
+//       user,
+//       info
+//     ) {
+//       if (error || !user) {
+//         res.status(400).json({ error });
+//       }
+//       const payload = {
+//         username: user._id
+//         // expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS)
+//       };
+//       // console.log(payload);
+
+//       /** assigns payload to req.user */
+//       req.login(payload, { session: false }, error => {
+//         // console.log(payload);
+//         if (error) {
+//           res.status(400).send({ error });
+//         }
+//         /** generate a signed json web token and return it in the response */
+//         //Sign Token
+//         jwt.sign(
+//           payload,
+//           process.env.SECRET_OR_KEY,
+//           { expiresIn: 7200 },
+//           (err, token) => {
+//             if (err) throw err;
+//             res.json({
+//               success: true,
+//               token: 'Bearer ' + token
+//             });
+//           }
+//         );
+
+//         const token = jwt.sign(payload, secret, { expiresIn: 7200 });
+
+//         /** assign our jwt to the cookie */
+//         res.cookie('jwt', token, { httpOnly: true }).status(200);
+
+//         // res.json({
+//         //   _id: payload.username,
+//         //   success: true,
+//         //   token: 'Bearer ' + token
+//         // });
+//       });
+//     })(req, res, next);
+//   }
+// );
+
 router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    console.log(req.headers);
     const { user } = req;
-    console.log(req.header);
+    console.log(user);
 
     res.status(200).send({ user });
   }
@@ -74,21 +139,6 @@ router.get(
 //   console.log(req.sessionID);
 //   res.send({ _id: req.user._id });
 // });
-
-// router.post(
-//   '/login',
-//   function(req, res, next) {
-//     console.log('routes/user.js, login, req.body: ');
-//     console.log(req.body);
-//     next();
-//   },
-//   passport.authenticate('local-login'),
-//   (req, res) => {
-//     console.log('logged in', req.user);
-
-//     res.send({ _id: req.user._id });
-//   }
-// );
 
 // router.post('/login', passport.authenticate('local'), function(req, res) {
 //   console.log('logged in', req.user);

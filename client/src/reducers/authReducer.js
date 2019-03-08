@@ -11,13 +11,17 @@ export default (state = INITIAL_STATE, action) => {
     case SIGN_IN:
       return {
         ...state,
-        isSignedIn: true,
-        userId: action.payload._id
+        isSignedIn: true
+        // userId: action.payload._id
       };
     case SIGN_OUT:
       return { ...state, isSignedIn: false, userId: null };
     case GET_USER:
-      return { ...state, isSignedIn: true, userId: action.payload };
+      return {
+        ...state,
+        // isSignedIn: true,
+        userId: action.payload
+      };
     default:
       return state;
   }

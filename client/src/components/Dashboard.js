@@ -6,6 +6,7 @@ import UserAuth from './UserAuth';
 
 class Dashboard extends React.Component {
   componentDidMount() {
+    console.log(localStorage.getItem('jwt'));
     this.props.getUser();
     this.props.fetchFiles();
   }

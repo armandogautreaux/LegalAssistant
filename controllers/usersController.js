@@ -34,6 +34,9 @@ module.exports = {
     });
   },
   login: (req, res) => {
+    // console.log(req.body.data);
+    // req.query.email = req.body.data.email;
+    // req.query.password = req.body.data.password;
     const secret = process.env.SECRET_OR_KEY;
 
     passport.authenticate('local', { session: false }, (error, user) => {
@@ -41,23 +44,42 @@ module.exports = {
         res.status(400).json({ error });
       }
       const payload = {
-        username: user._id,
-        expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS)
+        username: user._id
+        // expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS)
       };
-      console.log(payload);
+      // console.log(payload);
 
       /** assigns payload to req.user */
       req.login(payload, { session: false }, error => {
-        console.log(payload);
+        // console.log(payload);
         if (error) {
           res.status(400).send({ error });
         }
         /** generate a signed json web token and return it in the response */
-        const token = jwt.sign(JSON.stringify(payload), secret);
+        //Sign Token
+        jwt.sign(
+          payload,
+          process.env.SECRET_OR_KEY,
+          { expiresIn: 7200 },
+          (err, token) => {
+            if (err) throw err;
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
+          }
+        );
+
+        const token = jwt.sign(payload, secret, { expiresIn: 7200 });
 
         /** assign our jwt to the cookie */
-        res.cookie('jwt', token, { httpOnly: true, secure: true });
-        res.status(200).send({ _id: payload.username });
+        res.cookie('jwt', token, { httpOnly: true }).status(200);
+
+        // res.json({
+        //   _id: payload.username,
+        //   success: true,
+        //   token: 'Bearer ' + token
+        // });
       });
     })(req, res);
   }
