@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case GET_USER:
       return {
         ...state,
-        // isSignedIn: true,
+        isSignedIn: true,
         userId: action.payload
       };
     default:

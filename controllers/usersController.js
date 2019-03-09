@@ -34,20 +34,14 @@ module.exports = {
     });
   },
   login: (req, res) => {
-    // console.log(req.body.data);
-    // req.query.email = req.body.data.email;
-    // req.query.password = req.body.data.password;
     const secret = process.env.SECRET_OR_KEY;
-
     passport.authenticate('local', { session: false }, (error, user) => {
       if (error || !user) {
         res.status(400).json({ error });
       }
       const payload = {
         username: user._id
-        // expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS)
       };
-      // console.log(payload);
 
       /** assigns payload to req.user */
       req.login(payload, { session: false }, error => {

@@ -6,7 +6,6 @@ import UserAuth from './UserAuth';
 
 class Dashboard extends React.Component {
   componentDidMount() {
-    console.log(localStorage.getItem('jwt'));
     this.props.getUser();
     this.props.fetchFiles();
   }
@@ -62,7 +61,7 @@ class Dashboard extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     files: Object.values(state.files),
     isSignedIn: state.auth.isSignedIn,

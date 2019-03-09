@@ -14,7 +14,7 @@ import {
   GET_USER
 } from './types';
 import history from '../history';
-// import qs from 'query-string';
+
 //Register Action
 export const register = ({ name, email, password }) => {
   return async function(dispatch) {
@@ -30,35 +30,18 @@ export const register = ({ name, email, password }) => {
 
 //SignIn Action
 export const signIn = ({ email, password }) => {
-  // var settings = {
-  //   async: true,
-  //   crossDomain: true,
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     'Cache-Control': 'no-cache'
-  //   }
-  // };
-
-  // const config = {
-  //   withCredentials: true,
-  //   data: {
-  //     email: email,
-  //     password: password
-  //   },
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   credentials: 'same-origin'
-  // };
   return async dispatch => {
     const response = await api.post('/users/login', { email, password });
-    // const response = await api.post('/users/login', {
-    //   data: { email, password },
-    //   withCredentials: true
-    // });
     dispatch({ type: SIGN_IN, payload: response.data });
     console.log(response.data);
+    history.push('/dashboard');
+  };
+};
+
+export const getUser = () => {
+  return async dispatch => {
+    const response = await api.get('/users/profile', { withCredentials: true });
+    dispatch({ type: GET_USER, payload: response.data.user.username });
     history.push('/dashboard');
   };
 };
@@ -66,7 +49,7 @@ export const signIn = ({ email, password }) => {
 //SignOut Action
 export const signOut = () => {
   return async dispatch => {
-    await api.get('/users/logout');
+    await api.get('/users/logout', { withCredentials: true });
     dispatch({ type: SIGN_OUT });
     history.push('/');
   };
@@ -113,62 +96,17 @@ export const deleteFile = id => {
   };
 };
 
-export const getUser = () => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'same-origin'
-  };
-
-  return async dispatch => {
-    const response = await api.get('/users/profile', config);
-    console.log(response.data);
-    dispatch({ type: GET_USER, payload: response.data });
-    console.log(response.data);
-    history.push('/dashboard');
-  };
-};
-
-// //fetchSearch
-// export const fetchSearch = Query => {
-//   return async dispatch => {
-
-//     // const response = await api.get(`/files/?${searchString}`);
-//     // dispatch({ type: SEARCH_FILE, payload: response.data });
-//     // console.log(response.data);
-//     history.push(`/results/${searchString}`);
-//   };
-// };
-
 //searchFile
 export const fetchSearch = Query => {
   return async dispatch => {
-    // const searchString = qs.stringify(formValues);
     const response = await api.get(`/files/search${Query}`);
     dispatch({
       type: FETCH_SEARCH,
       payload: response.data[0]
     });
-    // console.log(response.data);
-    // console.log(response.data[0]);
     history.push(`/search/${Query}`);
   };
 };
-
-// export const searchFile = formValues => {
-//   return dispatch => {
-//     const searchString = qs.stringify(formValues);
-//     const nueObject = { search: searchString };
-//     dispatch({
-//       type: SEARCH_FILE,
-//       payload: nueObject
-//     });
-
-//     history.push(`/results/?${searchString}`);
-//   };
-// };
 
 export const resetSearch = () => {
   return {
