@@ -1,31 +1,19 @@
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import history from '../history';
+import React from 'react';
+import { connect } from 'react-redux';
+import Dashboard from './Dashboard';
+import LoginPage from './LoginPage/LoginPage';
 
-// const withAuth = ComponentToProtect => {
-//   return class extends Component {
-//     render() {
-//       if (this.props.isSignedIn) {
-//         return (
-//           <React.Fragment>
-//             <ComponentToProtect {...this.props} />
-//           </React.Fragment>
-//         );
-//       } else {
-//         return history.push('/login');
-//       }
-//     }
-//   };
-// };
-// const mapStateToProps = state => {
-//   return {
-//     isSignedIn: state.auth.isSignedIn
-//   };
-// };
+const withAuth = props => {
+  if (props.isSignedIn) {
+    return <Dashboard />;
+  }
+  return <LoginPage />;
+};
 
-// // export default withAuth
+const mapStateToProps = state => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  };
+};
 
-// export default connect(
-//   mapStateToProps,
-//   null
-// )(withAuth);
+export default connect(mapStateToProps)(withAuth);

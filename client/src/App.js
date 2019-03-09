@@ -11,9 +11,10 @@ import FileCreate from './components/files/FileCreate';
 import FileEdit from './components/files/FileEdit';
 import FileDelete from './components/files/FileDelete';
 import Results from './components/Results';
+import withAuth from './components/withAuth';
 
 import history from './history';
-import Dashboard from './components/Dashboard';
+// import Dashboard from './components/Dashboard';
 
 const App = () => {
   return (
@@ -27,8 +28,7 @@ const App = () => {
 
             <Route path="/register" exact component={RegisterPage} />
             <Route path="/login" exact component={LoginPage} />
-
-            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/dashboard" exact component={withAuth} />
             <Route path="/files/new" exact component={FileCreate} />
             <Route path="/files/:id" exact component={FileShow} />
             <Route path="/files/delete/:id" exact component={FileDelete} />
