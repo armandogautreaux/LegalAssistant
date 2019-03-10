@@ -11,7 +11,8 @@ import {
   SEARCH_FILE,
   FETCH_SEARCH,
   RESET_SEARCH,
-  GET_USER
+  GET_USER,
+  SELECT_VALUE
 } from './types';
 import history from '../history';
 
@@ -117,5 +118,12 @@ export const resetSearch = () => {
 export const searchFile = () => {
   return {
     type: SEARCH_FILE
+  };
+};
+
+export const handleItemClick = e => {
+  return {
+    type: SELECT_VALUE,
+    payload: e
   };
 };

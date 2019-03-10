@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signOut, signIn } from '../actions';
+import { signOut, signIn, handleItemClick } from '../actions';
+import { Menu } from 'semantic-ui-react';
 
 class UserAuth extends React.Component {
-  // componentDidMount(){
-
-  // }
+  onNameChange = (e, { name }) => {
+    this.props.handleItemClick(name);
+  };
   onSignOutClick = () => {
     this.props.signOut();
   };
@@ -14,38 +15,68 @@ class UserAuth extends React.Component {
   renderAuthButtons() {
     if (this.props.isSignedIn) {
       return (
-        <div className="ui buttons">
-          <button className="ui button black" onClick={this.onSignOutClick}>
-            <i className="sign-in icon" />
+        <React.Fragment>
+          <Menu.Item
+            as={Link}
+            to="/dashboard"
+            name="home"
+            active={this.props.activeItem === 'home'}
+            onClick={this.onNameChange}
+          >
+            Inicio
+          </Menu.Item>
+          <Menu.Item className="ui button black" onClick={this.onSignOutClick}>
             Salir
-          </button>
-        </div>
+          </Menu.Item>
+        </React.Fragment>
       );
     } else {
       return (
-        <div className="ui buttons">
-          <Link className="ui button black" to="/login">
-            <i className="sign-in icon" />
-            Ingresar
-          </Link>
-          <div className="or" />
-          <Link to="/register" className="ui button green">
-            <i className="users icon" />
+        <React.Fragment>
+          <Menu.Item
+            as={Link}
+            to="/"
+            name="home"
+            active={this.props.activeItem === 'home'}
+            onClick={this.onNameChange}
+          >
+            Inicio
+          </Menu.Item>
+          <Menu.Item
+            as={Link}
+            to="/register"
+            name="register"
+            active={this.props.activeItem === 'register'}
+            onClick={this.onNameChange}
+          >
             Registrar
-          </Link>
-        </div>
+          </Menu.Item>
+          <Menu.Item
+            as={Link}
+            to="/login"
+            name="login"
+            active={this.props.activeItem === 'login'}
+            onClick={this.onNameChange}
+          >
+            Ingresar
+          </Menu.Item>
+        </React.Fragment>
       );
     }
   }
   render() {
-    return <div>{this.renderAuthButtons()}</div>;
+    return <React.Fragment>{this.renderAuthButtons()}</React.Fragment>;
   }
 }
 const mapStateToProps = state => {
-  return { isSignedIn: state.auth.isSignedIn };
+  console.log(state.event.activeItem);
+  return {
+    isSignedIn: state.auth.isSignedIn,
+    activeItem: state.event.activeItem
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { signOut, signIn }
+  { handleItemClick, signOut, signIn }
 )(UserAuth);

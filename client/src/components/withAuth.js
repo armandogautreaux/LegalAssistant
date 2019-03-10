@@ -2,13 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage/LoginPage';
+import { getUser } from '../actions';
 
-const withAuth = props => {
-  if (props.isSignedIn) {
-    return <Dashboard />;
+class withAuth extends React.Component {
+  componentDidMount() {
+    this.props.getUser();
   }
-  return <LoginPage />;
-};
+  render() {
+    if (this.props.isSignedIn) {
+      return <Dashboard />;
+    }
+    return <LoginPage />;
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -16,4 +22,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withAuth);
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(withAuth);

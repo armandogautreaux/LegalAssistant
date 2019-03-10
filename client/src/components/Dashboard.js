@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchFiles, getUser } from '../actions';
-import UserAuth from './UserAuth';
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -53,7 +52,6 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <UserAuth />
         <h2>Dashboard</h2>
         <div className="ui celled list">{this.renderList()}</div>
         {this.renderCreate()}

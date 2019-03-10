@@ -1,20 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UserAuth from './components/UserAuth';
+import { Menu } from 'semantic-ui-react';
 
 const Header = () => {
   return (
-    <div className="ui secondary pointing menu">
-      <Link to="/" className="item">
-        Registro Legal
-      </Link>
-      <div className="right menu">
-        <Link to="/" className="item">
-          All files
-        </Link>
+    <Menu stackable>
+      <Menu.Item as={Link} to="/" name="home">
+        Asistente Legal
+      </Menu.Item>
+      <Menu.Menu position="right">
         <UserAuth />
-      </div>
-    </div>
+      </Menu.Menu>
+    </Menu>
   );
 };
 
