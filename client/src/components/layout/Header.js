@@ -1,16 +1,17 @@
+import './Header.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import UserAuth from './components/UserAuth';
+import MenuItems from './MenuItems';
 import { Menu } from 'semantic-ui-react';
 
 const Header = () => {
   return (
-    <Menu stackable>
+    <Menu size="small">
       <Menu.Item as={Link} to="/" name="home">
         Asistente Legal
       </Menu.Item>
       <Menu.Menu position="right">
-        <UserAuth />
+        <MenuItems />
       </Menu.Menu>
     </Menu>
   );

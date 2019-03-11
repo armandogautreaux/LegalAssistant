@@ -1,0 +1,13 @@
+#content {
+  padding-top: 56px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#content h1 {
+  font-size: 36px;
+}
+/* 
+#content .ui.dividing.header {
+  width: 100%;
+} */

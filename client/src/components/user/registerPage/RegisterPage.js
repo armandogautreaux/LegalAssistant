@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { register } from '../../actions';
-import UserForm from '../forms/UserForm';
+import { register } from '../../../actions';
+import UserForm from '../../forms/UserForm';
 
 class RegisterPage extends React.Component {
   onSubmit = formValues => {

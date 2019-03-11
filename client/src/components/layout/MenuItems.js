@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signOut, signIn, handleItemClick } from '../actions';
-import { Menu } from 'semantic-ui-react';
+import { signOut, signIn, handleItemClickMenu } from '../../actions';
+import { Menu, Button, Icon } from 'semantic-ui-react';
 
-class UserAuth extends React.Component {
+class MenuItems extends React.Component {
   onNameChange = (e, { name }) => {
-    this.props.handleItemClick(name);
+    this.props.handleItemClickMenu(name);
   };
   onSignOutClick = () => {
     this.props.signOut();
@@ -49,7 +49,12 @@ class UserAuth extends React.Component {
             active={this.props.activeItem === 'register'}
             onClick={this.onNameChange}
           >
-            Registrar
+            <Button animated>
+              <Button.Content visible>Registrar Despacho</Button.Content>
+              <Button.Content hidden>
+                <Icon name="arrow right" />
+              </Button.Content>
+            </Button>
           </Menu.Item>
           <Menu.Item
             as={Link}
@@ -58,7 +63,7 @@ class UserAuth extends React.Component {
             active={this.props.activeItem === 'login'}
             onClick={this.onNameChange}
           >
-            Ingresar
+            <Button primary>Ingresar</Button>
           </Menu.Item>
         </React.Fragment>
       );
@@ -69,14 +74,13 @@ class UserAuth extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.event.activeItem);
   return {
     isSignedIn: state.auth.isSignedIn,
-    activeItem: state.event.activeItem
+    activeItem: state.event.activeMenuItem
   };
 };
 
 export default connect(
   mapStateToProps,
-  { handleItemClick, signOut, signIn }
-)(UserAuth);
+  { handleItemClickMenu, signOut, signIn }
+)(MenuItems);

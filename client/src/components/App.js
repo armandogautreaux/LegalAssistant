@@ -1,31 +1,29 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
+import Header from './layout/Header';
+import HomePage from './user/homePage/HomePage';
+import RegisterPage from './user/registerPage/RegisterPage';
+import LoginPage from './admin/loginPage/LoginPage';
+import FileShow from './files/FileShow';
+import FileCreate from './files/FileCreate';
+import FileEdit from './files/FileEdit';
+import FileDelete from './files/FileDelete';
+import Search from './files/FilesSearch';
+import withAuth from './admin/dashboard/withAuth';
+// import Sidebar from './admin/dashboard/elements/Sidebar';
 
-import Header from './Header';
-import HomePage from './components/HomePage/HomePage';
-import RegisterPage from './components/RegisterPage/RegisterPage';
-import LoginPage from './components/LoginPage/LoginPage';
-// import DashBoard from './components/Dashboard';
-import FileShow from './components/files/FileShow';
-import FileCreate from './components/files/FileCreate';
-import FileEdit from './components/files/FileEdit';
-import FileDelete from './components/files/FileDelete';
-import Results from './components/Results';
-import withAuth from './components/withAuth';
-
-import history from './history';
-// import Dashboard from './components/Dashboard';
+import history from '../history';
 
 const App = () => {
   return (
-    <div className="ui container">
+    <div>
       <Router history={history}>
-        <div>
+        <div className="App">
           <Header />
+          {/* <Sidebar /> */}
           <Switch>
             <Route path="/" exact component={HomePage} />
-            <Route path="/search" exact component={Results} />
-
+            <Route path="/search" exact component={Search} />
             <Route path="/register" exact component={RegisterPage} />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/dashboard" exact component={withAuth} />

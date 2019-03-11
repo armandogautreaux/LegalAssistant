@@ -1,4 +1,4 @@
-import api from '../apis/gyg';
+import api from '../apis/api';
 import {
   USER_CREATE,
   SIGN_IN,
@@ -12,7 +12,8 @@ import {
   FETCH_SEARCH,
   RESET_SEARCH,
   GET_USER,
-  SELECT_VALUE
+  SELECT_MENU_ITEM,
+  SELECT_SIDEBAR_ITEM
 } from './types';
 import history from '../history';
 
@@ -121,9 +122,15 @@ export const searchFile = () => {
   };
 };
 
-export const handleItemClick = e => {
+export const handleItemClickMenu = e => {
   return {
-    type: SELECT_VALUE,
+    type: SELECT_MENU_ITEM,
+    payload: e
+  };
+};
+export const handleItemClickSidebar = e => {
+  return {
+    type: SELECT_SIDEBAR_ITEM,
     payload: e
   };
 };

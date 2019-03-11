@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchForm from '../forms/SearchForm';
-import history from '../../history';
+import SearchForm from '../../forms/SearchForm';
+import history from '../../../history';
 import qs from 'query-string';
 
 class HomePage extends React.Component {

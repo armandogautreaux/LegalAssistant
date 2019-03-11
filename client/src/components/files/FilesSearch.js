@@ -1,8 +1,8 @@
 import React from 'react';
-import { fetchSearch, resetSearch } from '../actions';
+import { fetchSearch, resetSearch } from '../../actions';
 import { connect } from 'react-redux';
 
-class Results extends React.Component {
+class FilesSearch extends React.Component {
   componentDidMount() {
     this.props.fetchSearch(this.props.location.search);
   }
@@ -37,17 +37,7 @@ const mapStateToProps = state => {
   return { files: state.search.response };
 };
 
-// export default connect(
-//   mapStateToProps,
-//   { fetchSearch }
-// )(Results);
-
 export default connect(
   mapStateToProps,
   { fetchSearch, resetSearch }
-)(Results);
-
-// // redux before
-// const MyConnectedComponent = connect(mapStateToProps)(MyComponent);
-// // redux after
-// const MyConnectedComponent = withRouter(connect(mapStateToProps)(MyComponent));
+)(FilesSearch);

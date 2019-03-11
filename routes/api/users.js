@@ -9,10 +9,7 @@ router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req);
     const { user } = req;
-    console.log(user);
-
     res.status(200).send({ user });
   }
 );
@@ -21,7 +18,6 @@ router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req.user);
     if (req.user) {
       req.logout();
       res
