@@ -2,7 +2,7 @@ import './Sidebar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
-import { handleItemClickSidebar } from '../../../../actions';
+import { handleItemClickSidebar } from '../../../actions';
 import { Grid, Menu } from 'semantic-ui-react';
 
 class Sidebar extends React.Component {

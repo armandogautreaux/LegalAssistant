@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signOut, signIn, handleItemClickMenu } from '../../actions';
+import { signOut, signIn, handleItemClickMenu } from '../../../actions';
 import { Menu, Button, Icon } from 'semantic-ui-react';
 
 class MenuItems extends React.Component {
