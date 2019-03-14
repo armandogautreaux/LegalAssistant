@@ -1,7 +1,9 @@
 body {
   background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
 }
-body > .grid {
+/* body > .grid {
   height: 100%;
 }
 .image {
@@ -9,4 +11,4 @@ body > .grid {
 }
 .column {
   max-width: 450px;
-}
+} */

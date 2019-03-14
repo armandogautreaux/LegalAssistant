@@ -18,35 +18,14 @@ class MainBoard extends React.Component {
   }
   render() {
     return (
-      <Grid.Column
-        mobile={16}
-        tablet={13}
-        computer={13}
-        floated="right"
-        id="content"
-      >
-        <Grid padded>
-          <Grid.Row>
-            <Header dividing size="huge" as="h1">
-              Dashboard
-            </Header>
-          </Grid.Row>
-          <Grid.Row textAlign="center">
-            <Grid.Column mobile={8} tablet={4} computer={4}>
-              {this.renderCreate()}
-            </Grid.Column>
-            <Grid.Column mobile={8} tablet={4} computer={4}>
-              {this.renderCreate()}
-            </Grid.Column>
-            <Grid.Column mobile={8} tablet={4} computer={4}>
-              {this.renderCreate()}
-            </Grid.Column>
-            <Grid.Column mobile={8} tablet={4} computer={4}>
-              {this.renderCreate()}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Grid.Column>
+      <React.Fragment>
+        <Grid.Row id="content">
+          <Header dividing size="huge" as="h1">
+            Dashboard
+          </Header>
+          {this.renderCreate()}
+        </Grid.Row>
+      </React.Fragment>
     );
   }
 }

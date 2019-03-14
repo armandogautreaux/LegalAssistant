@@ -1,8 +1,9 @@
+import '../dashboard/elements/MainBoard.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchFiles } from '../../../actions';
-import { Grid } from 'semantic-ui-react';
+import { Grid, GridColumn } from 'semantic-ui-react';
 import MainBoard from './elements/MainBoard';
 
 class Dashboard extends React.Component {
@@ -41,12 +42,18 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <Grid padded>
-        <MainBoard />
-        <div>
-          <div className="ui celled list">{this.renderList()}</div>
-        </div>
-      </Grid>
+      <React.Fragment>
+        <Grid.Column mobile={16} tablet={13} computer={14} floated="right">
+          <Grid padded>
+            <MainBoard />
+            <Grid.Row>
+              <div>
+                <div className="ui celled list">{this.renderList()}</div>
+              </div>
+            </Grid.Row>
+          </Grid>
+        </Grid.Column>
+      </React.Fragment>
     );
   }
 }

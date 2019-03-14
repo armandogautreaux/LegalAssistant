@@ -12,15 +12,15 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <Grid.Column tablet={3} computer={3} only="tablet computer" id="sidebar">
-        <Menu vertical borderless fluid text>
+      <Grid.Column tablet={3} computer={2} only="tablet computer" id="sidebar">
+        <Menu vertical size="small" fluid text>
           <Menu.Item
             as="a"
             name="overview"
             active={this.props.activeItem === 'overview'}
             onClick={this.onNameChange}
           >
-            Overview
+            Inicio
           </Menu.Item>
           <Menu.Item
             as="a"
@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
             active={this.props.activeItem === 'reports'}
             onClick={this.onNameChange}
           >
-            Reports
+            Nuevo Expediente
           </Menu.Item>
           <Menu.Item
             as="a"
@@ -36,7 +36,7 @@ class Sidebar extends React.Component {
             active={this.props.activeItem === 'analytics'}
             onClick={this.onNameChange}
           >
-            Analytics
+            Mostrar Todos
           </Menu.Item>
           <Menu.Item
             as="a"
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
             active={this.props.activeItem === 'export'}
             onClick={this.onNameChange}
           >
-            Export
+            Ver Estadisticas
           </Menu.Item>
         </Menu>
       </Grid.Column>
