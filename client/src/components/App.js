@@ -1,10 +1,10 @@
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
-import Dashboard from '../components/admin/dashboard/Dashboard';
+import { Route, Router, Switch } from 'react-router-dom';
+// import Dashboard from '../components/admin/dashboard/Dashboard';
 // import Header from '../';
-import HomePage from './user/homePage/HomePage';
-import RegisterPage from './user/registerPage/RegisterPage';
-import LoginPage from './admin/loginPage/LoginPage';
+// import HomePage from './user/homePage/HomePage';
+// import RegisterPage from './user/registerPage/RegisterPage';
+// import LoginPage from './admin/loginPage/LoginPage';
 import FileShow from './files/FileShow';
 import FileCreate from './files/FileCreate';
 import FileEdit from './files/FileEdit';
@@ -15,6 +15,10 @@ import DefaultLayout from './layouts/default/DefaultLayout';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import NoMatch from './NoMatch';
 import history from '../history';
+import HomePage from '../components/pages/HomePage';
+import UserRegisterPage from './pages/UserRegisterPage';
+import UserLoginPage from './pages/UserLoginPage';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -24,11 +28,15 @@ const App = () => {
           {/* <Header /> */}
           {/* <Sidebar /> */}
           <Switch>
-            <DefaultLayout path="/" exact component={HomePage} />
+            <Route path="/" exact component={HomePage} />
+            <Route path="/register" exact component={UserRegisterPage} />
+            <Route path="/login" exact component={UserLoginPage} />
+            <Route path="/dashboard" exact component={Dashboard} />
+            {/* <DefaultLayout path="/" exact component={HomePage} /> */}
             <DefaultLayout path="/search" exact component={Search} />
-            <DefaultLayout path="/register" component={RegisterPage} />
-            <DefaultLayout path="/login" component={LoginPage} />
-            <DashboardLayout path="/dashboard" exact component={Dashboard} />
+            {/* <DefaultLayout path="/register" component={RegisterPage} /> */}
+            {/* <DefaultLayout path="/login" component={LoginPage} /> */}
+            {/* <DashboardLayout path="/dashboard" exact component={Dashboard} /> */}
             <DashboardLayout path="/files/new" exact component={FileCreate} />
             <DashboardLayout path="/files/:id" exact component={FileShow} />
             <DashboardLayout
@@ -41,6 +49,7 @@ const App = () => {
               exact
               component={FileEdit}
             />
+            {/* <Route path="/page" exact component={homepage} /> */}
             <DefaultLayout component={NoMatch} />
           </Switch>
         </div>
