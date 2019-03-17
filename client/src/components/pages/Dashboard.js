@@ -1,20 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import DashboardTemplate from '../templates/DashboardTemplate';
 import Header from '../organisms/header/Header';
 import Sidebar from '../organisms/sidebar/Sidebar';
 import Footer from '../organisms/footer/Footer';
-import MainDahboard from '../organisms/mainDashboard/MainDashboard';
+import MainDashboard from '../organisms/mainDashboard/MainDashboard';
+import { fetchFiles } from '../../actions';
 
-const Dashboard = () => {
-  return (
-    <DashboardTemplate
-      header={<Header />}
-      sidebar={<Sidebar />}
-      footer={<Footer />}
-    >
-      <MainDahboard />
-    </DashboardTemplate>
-  );
-};
+class Dashboard extends React.Component {
+  componentDidMount() {
+    this.props.fetchFiles();
+  }
+  render() {
+    return (
+      <DashboardTemplate
+        header={<Header />}
+        sidebar={<Sidebar />}
+        footer={<Footer />}
+      >
+        <MainDashboard />
+      </DashboardTemplate>
+    );
+  }
+}
 
-export default Dashboard;
+export default connect(
+  null,
+  { fetchFiles }
+)(Dashboard);

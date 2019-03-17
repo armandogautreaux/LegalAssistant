@@ -44,7 +44,6 @@ export const getUser = () => {
   return async dispatch => {
     const response = await api.get('/users/profile', { withCredentials: true });
     dispatch({ type: GET_USER, payload: response.data.user.username });
-    history.push('/dashboard');
   };
 };
 

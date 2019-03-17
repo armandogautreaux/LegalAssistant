@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchFiles } from '../../../actions';
 import { Grid, Header } from 'semantic-ui-react';
+import FilesShowContainer from '../files/FilesShowContainer';
 
-class MainDahboard extends React.Component {
+class MainDashboard extends React.Component {
   renderCreate() {
     if (this.props.isSignedIn) {
       return (
@@ -24,6 +26,7 @@ class MainDahboard extends React.Component {
           </Header>
           {this.renderCreate()}
         </Grid.Row>
+        <FilesShowContainer />
       </React.Fragment>
     );
   }
@@ -34,4 +37,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MainDahboard);
+export default connect(
+  mapStateToProps,
+  { fetchFiles }
+)(MainDashboard);

@@ -1,16 +1,9 @@
-import '../dashboard/elements/MainBoard.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchFiles } from '../../../actions';
 import { Grid } from 'semantic-ui-react';
-import MainBoard from './elements/MainBoard';
 
-class Dashboard extends React.Component {
-  componentDidMount() {
-    this.props.fetchFiles();
-  }
-
+class FilesShowContainer extends React.Component {
   renderAdmin(file) {
     if (file.userId === this.props.currentUserId) {
       return (
@@ -45,7 +38,6 @@ class Dashboard extends React.Component {
       <React.Fragment>
         <Grid.Column mobile={16} tablet={13} computer={14} floated="right">
           <Grid padded>
-            <MainBoard />
             <Grid.Row>
               <div>
                 <div className="ui celled list">{this.renderList()}</div>
@@ -57,7 +49,7 @@ class Dashboard extends React.Component {
     );
   }
 }
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     files: Object.values(state.files),
     isSignedIn: state.auth.isSignedIn,
@@ -65,7 +57,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchFiles }
-)(Dashboard);
+export default connect(mapStateToProps)(FilesShowContainer);
