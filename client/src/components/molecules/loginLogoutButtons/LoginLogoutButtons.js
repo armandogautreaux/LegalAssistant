@@ -1,46 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signOut, signIn } from '../../../actions';
+import { signOut, signIn, getUser } from '../../../actions';
 import { Menu, Button } from 'semantic-ui-react';
 
 class LoginLogoutButtons extends React.Component {
-  // onSignInClick = () => {
-  //   this.auth.signIn();
-  // };
-
   onSignOutClick = () => {
     this.props.signOut();
   };
-  // onAuthChange = isSignedIn => {
-  //   if (isSignedIn) {
-  //     this.props.signIn(this.auth.currentUser.get().getId());
-  //   } else {
-  //     this.props.signOut();
-  //   }
-  // };
-
-  // renderAuthButton() {
-  //   if (this.props.isSignedIn === null) {
-  //     return null;
-  //   } else if (this.props.isSignedIn) {
-  //     return (
-  //       <button onClick={this.onSignOutClick} className="ui red google button">
-  //         <i className="google icon" /> Sign Out
-  //       </button>
-  //     );
-  //   } else {
-  //     return (
-  //       <button onClick={this.onSignInClick} className="ui red google button">
-  //         <i className="google icon" />
-  //         Sign In with Google
-  //       </button>
-  //     );
-  //   }
-  // }
-  // render() {
-  //   return <div>{this.renderAuthButton()}</div>;
-  // }
 
   renderLoginOrLogoutButtons() {
     if (this.props.isSignedIn) {
@@ -90,5 +57,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { signOut, signIn }
+  { getUser, signOut, signIn }
 )(LoginLogoutButtons);

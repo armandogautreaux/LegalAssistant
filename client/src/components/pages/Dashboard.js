@@ -5,10 +5,11 @@ import Header from '../organisms/header/Header';
 import Sidebar from '../organisms/sidebar/Sidebar';
 import Footer from '../organisms/footer/Footer';
 import MainDashboard from '../organisms/mainDashboard/MainDashboard';
-import { fetchFiles } from '../../actions';
+import { fetchFiles, getUser } from '../../actions';
 
 class Dashboard extends React.Component {
   componentDidMount() {
+    this.props.getUser();
     this.props.fetchFiles();
   }
   render() {
@@ -26,5 +27,5 @@ class Dashboard extends React.Component {
 
 export default connect(
   null,
-  { fetchFiles }
+  { getUser, fetchFiles }
 )(Dashboard);

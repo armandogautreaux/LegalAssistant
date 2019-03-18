@@ -1,22 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import DefaultTemplate from '../templates/DefaultTemplate';
+import DashboardTemplate from '../templates/DashboardTemplate';
+
 import Header from '../organisms/header/Header';
+import Sidebar from '../organisms/sidebar/Sidebar';
 import Footer from '../organisms/footer/Footer';
 import FileShowContainer from '../organisms/files/FileShowContainer';
-import { fetchFile } from '../../actions';
+import { fetchFile, getUser } from '../../actions';
 
 class FileShow extends React.Component {
   componentDidMount() {
-    console.log(this.props.match.params.id);
+    this.props.getUser();
     this.props.fetchFile(this.props.match.params.id);
   }
   render() {
     const file = this.props.file;
     return (
-      <DefaultTemplate header={<Header />} footer={<Footer />}>
+      <DashboardTemplate
+        header={<Header />}
+        sidebar={<Sidebar />}
+        footer={<Footer />}
+      >
         <FileShowContainer file={file} />
-      </DefaultTemplate>
+      </DashboardTemplate>
     );
   }
 }
@@ -27,5 +33,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { fetchFile }
+  { fetchFile, getUser }
 )(FileShow);

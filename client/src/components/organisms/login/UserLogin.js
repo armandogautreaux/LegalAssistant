@@ -4,7 +4,7 @@ import { signIn } from '../../../actions';
 import { Link } from 'react-router-dom';
 import SingleForm from '../../forms/SingleForm';
 
-class LoginPage extends React.Component {
+class UserLogin extends React.Component {
   onSubmit = formValues => {
     this.props.signIn(formValues);
   };
@@ -25,13 +25,12 @@ class LoginPage extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.auth);
   return {
-    state: state.auth
+    isSignedIn: state.auth.isSignedIn
   };
 };
 
 export default connect(
   mapStateToProps,
   { signIn }
-)(LoginPage);
+)(UserLogin);

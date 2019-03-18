@@ -1,21 +1,27 @@
 import React from 'react';
-import { fetchFile } from '../../actions';
+import { fetchFile, getUser } from '../../actions';
 import { connect } from 'react-redux';
-import DefaultTemplate from '../templates/DefaultTemplate';
+import DashboardTemplate from '../templates/DashboardTemplate';
 import Header from '../organisms/header/Header';
+import Sidebar from '../organisms/sidebar/Sidebar';
 import Footer from '../organisms/footer/Footer';
 import FileEditContainer from '../organisms/files/FileEditContainer';
 
 class FileEdit extends React.Component {
   componentDidMount() {
+    this.props.getUser();
     this.props.fetchFile(this.props.match.params.id);
   }
   render() {
     const file = this.props.file;
     return (
-      <DefaultTemplate header={<Header />} footer={<Footer />}>
+      <DashboardTemplate
+        header={<Header />}
+        sidebar={<Sidebar />}
+        footer={<Footer />}
+      >
         <FileEditContainer file={file} />
-      </DefaultTemplate>
+      </DashboardTemplate>
     );
   }
 }
@@ -26,5 +32,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 export default connect(
   mapStateToProps,
-  { fetchFile }
+  { fetchFile, getUser }
 )(FileEdit);
