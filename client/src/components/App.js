@@ -1,17 +1,9 @@
 import React from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
-// import FileShow from './files/FileShow';
-// import FileCreate from './files/FileCreate';
-// import FileEdit from './files/FileEdit';
-// import FileDelete from './files/FileDelete';
-// import Search from './files/FilesSearch';
-// import withAuth from './admin/dashboard/withAuth';
-import DefaultLayout from './layouts/default/DefaultLayout';
-// import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import PrivateRoute from './organisms/privateRoute/PrivateRoute';
 import NoMatch from './NoMatch';
 import history from '../history';
-import HomePage from '../components/pages/HomePage';
+import HomePage from './pages/HomePage';
 import UserRegisterPage from './pages/UserRegisterPage';
 import UserLoginPage from './pages/UserLoginPage';
 import Dashboard from './pages/Dashboard';
@@ -28,10 +20,9 @@ const App = () => {
         <div className="App">
           <Switch>
             <Route path="/" exact component={HomePage} />
+            <Route path="/search" exact component={SearchResults} />
             <Route path="/register" exact component={UserRegisterPage} />
             <Route path="/login" exact component={UserLoginPage} />
-            <Route path="/search" exact component={SearchResults} />
-            {/* <DefaultLayout path="/search" exact component={Search} /> */}
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/files/new" exact component={FileCreate} />
             <PrivateRoute path="/files/:id" exact component={FileShow} />
@@ -41,20 +32,7 @@ const App = () => {
               exact
               component={FileDelete}
             />
-            {/*
-            <DashboardLayout path="/files/:id" exact component={FileShow} />
-            <DashboardLayout
-              path="/files/delete/:id"
-              exact
-              component={FileDelete}
-            />
-            <DashboardLayout
-              path="/files/edit/:id"
-              exact
-              component={FileEdit}
-            /> */}
-            {/* <Route path="/page" exact component={homepage} /> */}
-            <DefaultLayout component={NoMatch} />
+            <Route component={NoMatch} />
           </Switch>
         </div>
       </Router>

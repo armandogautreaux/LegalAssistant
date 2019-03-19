@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../../actions';
 import { Link } from 'react-router-dom';
-import SingleForm from '../../forms/SingleForm';
+import SingleForm from '../forms/SingleForm';
 
 class UserLogin extends React.Component {
   onSubmit = formValues => {

@@ -1,13 +1,11 @@
-import { USER_CREATE } from '../actions/types';
+import { USER_CREATE, USER_CREATE_ERROR } from '../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
     case USER_CREATE:
-      return { registering: true };
-    // case types.REGISTER_SUCCESS:
-    //   return {};
-    // case types.REGISTER_FAILURE:
-    //   return {};
+      return { ...state, registering: true };
+    case USER_CREATE_ERROR:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

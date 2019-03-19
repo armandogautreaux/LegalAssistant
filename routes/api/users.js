@@ -32,16 +32,4 @@ router.get(
   }
 );
 
-// router.get('/logout', (req, res) => {
-//   // const { user } = req;
-//   console.log(req.user);
-//   if (req.user) {
-//     req.logout();
-//     res.send({ msg: 'logging out' });
-//     res.end();
-//   } else {
-//     res.send({ msg: 'no user to log out' });
-//   }
-// });
-
 module.exports = router;
