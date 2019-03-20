@@ -1,26 +1,43 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { handleOnLoadingComponent } from '../../../actions';
+import history from '../../../history';
 
-const PrivateRoute = ({ component: Component, isSignedIn, ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  isLoading,
+  handleOnLoadingComponent,
+  isSignedIn,
+  ...rest
+}) => {
+  useEffect(() => {
+    if (isSignedIn === false || isSignedIn === null) {
+      history.push('/dashboard');
+    }
+    handleOnLoadingComponent();
+  }, []);
   return (
     <Route
       {...rest}
       component={matchProps =>
-        isSignedIn === true ? (
-          <Component {...matchProps} />
+        isLoading === true ? (
+          <div>LOADING....</div>
         ) : (
-          <Redirect to="/login" />
+          <Component {...matchProps} />
         )
       }
     />
   );
 };
 const mapStateToProps = state => {
-  console.log(state.auth.isSignedIn);
   return {
+    isLoading: state.auth.isloading,
     isSignedIn: state.auth.isSignedIn
   };
 };
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default connect(
+  mapStateToProps,
+  { handleOnLoadingComponent }
+)(PrivateRoute);

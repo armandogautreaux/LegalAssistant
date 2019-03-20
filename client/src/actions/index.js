@@ -22,7 +22,8 @@ import {
   GET_USER,
   GET_USER_ERROR,
   SELECT_MENU_ITEM,
-  SELECT_SIDEBAR_ITEM
+  SELECT_SIDEBAR_ITEM,
+  LOADING_COMPONENT
 } from './types';
 import history from '../history';
 
@@ -206,5 +207,11 @@ export const handleItemClickSidebar = e => {
   return {
     type: SELECT_SIDEBAR_ITEM,
     payload: e
+  };
+};
+
+export const handleOnLoadingComponent = () => {
+  return {
+    type: LOADING_COMPONENT
   };
 };

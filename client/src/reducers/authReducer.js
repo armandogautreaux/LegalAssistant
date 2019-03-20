@@ -5,13 +5,15 @@ import {
   SIGN_OUT,
   SIGN_OUT_ERROR,
   GET_USER,
-  GET_USER_ERROR
+  GET_USER_ERROR,
+  LOADING_COMPONENT
 } from '../actions/types';
 
 const INITIAL_STATE = {
   isSignedIn: null,
   userId: null,
-  error: null
+  error: null,
+  isLoading: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -40,6 +42,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload
+      };
+    case LOADING_COMPONENT:
+      return {
+        ...state,
+        isloading: false
       };
 
     default:
