@@ -11,12 +11,13 @@ const PrivateRoute = ({
   isSignedIn,
   ...rest
 }) => {
-  useEffect(() => {
-    if (isSignedIn === false || isSignedIn === null) {
+  useEffect(function persistForm() {
+    // 👍 We're not breaking the first rule anymore
+    if (!isSignedIn) {
       history.push('/dashboard');
     }
-    handleOnLoadingComponent();
   }, []);
+
   return (
     <Route
       {...rest}
