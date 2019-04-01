@@ -68,21 +68,7 @@ module.exports = {
 
         /** assign our jwt to the cookie */
         res.cookie('jwt', token, { httpOnly: true }).status(200);
-
-        // res.json({
-        //   _id: payload.username,
-        //   success: true,
-        //   token: 'Bearer ' + token
-        // });
       });
     })(req, res);
   }
-  // authenticate: (req, res) => {
-  //   passport.authenticate('jwt', { session: false }, (error, user) => {
-  //     const validUser = req.user;
-
-  //     res.status(200).send({ validUser });
-  //   }),
-  //     (req, res);
-  // }
 };
