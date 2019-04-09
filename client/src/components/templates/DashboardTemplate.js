@@ -26,11 +26,11 @@ const DashboardTemplate = ({ header, sidebar, children, footer, props }) => {
   );
 };
 
-DashboardTemplate.propTypes = {
-  header: PropTypes.node.isRequired,
-  sidebar: PropTypes.node.isRequired,
-  footer: PropTypes.node.isRequired,
-  children: PropTypes.any.isRequired
-};
+// DashboardTemplate.propTypes = {
+//   header: PropTypes.node.isRequired,
+//   sidebar: PropTypes.node.isRequired,
+//   footer: PropTypes.node.isRequired,
+//   children: PropTypes.any.isRequired
+// };
 
 export default DashboardTemplate;
