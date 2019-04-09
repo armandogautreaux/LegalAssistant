@@ -13,9 +13,9 @@ const PageTemplate = ({ header, children, footer, props }) => {
 };
 
 PageTemplate.propTypes = {
-  header: PropTypes.node.isRequired,
-  footer: PropTypes.node.isRequired,
-  children: PropTypes.any.isRequired
+  // header: PropTypes.node.isRequired,
+  // footer: PropTypes.node.isRequired,
+  // children: PropTypes.any.isRequired
 };
 
 export default PageTemplate;
