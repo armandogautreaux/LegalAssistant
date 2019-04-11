@@ -14,6 +14,7 @@ router.get(
   }
 );
 
+//Make this route match with passport jwt and cookie from react
 router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),
@@ -24,7 +25,6 @@ router.get(
         .status(200)
         .clearCookie('jwt', { path: '/' })
         .json({ status: 'Success' });
-      // res.send({ msg: 'logging out' });
       res.end();
     } else {
       res.send({ msg: 'no user to log out' });
