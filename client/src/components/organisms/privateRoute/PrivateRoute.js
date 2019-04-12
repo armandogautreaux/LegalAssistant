@@ -12,7 +12,6 @@ const PrivateRoute = ({
   ...rest
 }) => {
   useEffect(function persistForm() {
-    // 👍 We're not breaking the first rule anymore
     if (!isSignedIn) {
       history.push('/dashboard');
     }

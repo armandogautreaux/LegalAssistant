@@ -5,6 +5,8 @@ const usersController = require('../../controllers/usersController');
 router.route('/register').post(usersController.register);
 router.route('/login').post(usersController.login);
 
+router.get('/user');
+
 router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
